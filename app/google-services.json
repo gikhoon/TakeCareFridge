@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "31989964466",
+    "project_id": "takecarefridge-ca13c",
+    "storage_bucket": "takecarefridge-ca13c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31989964466:android:62783f0592641e8f64b3ab",
+        "android_client_info": {
+          "package_name": "com.takecarefridge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31989964466-rom4s1ko4gf57omckeljoicr6kbfh6iq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTrmhN3SEZDZX1-pir2Ew95sL3EP5VnZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31989964466-rom4s1ko4gf57omckeljoicr6kbfh6iq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
