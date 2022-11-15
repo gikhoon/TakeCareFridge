@@ -13,6 +13,30 @@
         android:theme="@style/Theme.TakeCareFridge"
         tools:targetApi="31">
         <activity
+            android:name=".AddShoppingBag"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeMain"
+            android:exported="false" />
+        <activity
+            android:name=".AddIngredientDetail"
+            android:exported="false" />
+        <activity
+            android:name=".AddIngredient"
+            android:exported="false" />
+        <activity
+            android:name=".LoginScreen"
+            android:exported="false" />
+        <activity
+            android:name=".ShoppingBag"
+            android:exported="false" />
+        <activity
+            android:name=".FridgeMain"
+            android:exported="false" />
+        <activity
+            android:name=".FreezerMain"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
