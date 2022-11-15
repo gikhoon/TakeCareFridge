@@ -16,13 +16,22 @@
             android:id="@+id/shoppingBag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장바구니"/>
+            android:text="장바구니"
+            android:onClick="goShoppingBag"/>
         <Button
             android:id="@+id/bt_recipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="레시피"
-            android:layout_toEndOf="@id/shoppingBag"/>
+            android:layout_toEndOf="@id/shoppingBag"
+            android:onClick="goRecipeMain"/>
+
+        <ImageView
+            android:id="@+id/test2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@color/black"
+            android:layout_toEndOf="@id/bt_recipe"/>
 
     </RelativeLayout>
 
@@ -64,7 +73,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/ic_launcher_foreground"
+            android:onClick="goFreezeMain"/>
 
         <ImageButton
             android:id="@+id/ib_fridge"
@@ -73,7 +83,8 @@
             android:layout_below="@id/ib_freezer"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="50dp"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:src="@drawable/ic_launcher_foreground"
+            android:onClick="goFridgeMain"/>
 
     </RelativeLayout>
 

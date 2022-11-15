@@ -15,7 +15,8 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="뒤로 가기" />
+            android:text="뒤로 가기"
+            android:onClick="goMainActivity"/>
 
         <TextView
             android:layout_width="wrap_content"
