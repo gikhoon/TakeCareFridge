@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String path = document.getString("이미지");
+                        String path = document.getString("이미지"); //path = 스토리지 경로
                         ImageView iv = findViewById(R.id.test2);
 
                         StorageReference storageRef = storage.getReference();
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
                         Timestamp st = document.getTimestamp("timestamp");
+                        Log.d("LOGGER", st.toString());
                         Log.d("LOGGER", st.toDate().toString());
                     } else {
                         Log.d("LOGGER", "No such document");
