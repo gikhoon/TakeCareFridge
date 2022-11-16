@@ -21,19 +21,22 @@
         android:layout_weight="2"/>
 
     <TextView
-        android:id="@+id/tv_ingredient"
+        android:id="@+id/tv_ingredientED"
         android:layout_width="0dp"
         android:layout_marginStart="10dp"
         android:text="남은 유통기한"
         android:gravity="center"
         android:layout_height="match_parent"
         android:layout_weight="2"/>
+
     <ProgressBar
+        android:id="@+id/pb_edProgressBar"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:progress="30"
+        android:layout_marginEnd="10dp"
         android:layout_weight="4"/>
 
 </LinearLayout>

@@ -1,20 +1,40 @@
 package com.takecarefridge;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder> {
+import com.google.firebase.Timestamp;
 
-    public static class IngredientViewHolder extends RecyclerView.ViewHolder{
+import java.util.ArrayList;
+import java.util.List;
 
-        public IngredientViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+class FridgeData{
+    String name; //재료 이름
+    long totalED; //등록일 기준으로 유통기한 ED==유통기한(expiration date)
+    long remainED; //남은 유통기한
+
+    public FridgeData(String name,int totalED, int remainED){
+        this.name= name;
+        this.totalED=totalED;
+        this.remainED = remainED;
     }
+}
+
+public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder> {
+    ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
+
+    public IngredientListAdapter(ArrayList<FridgeData> fridgeDataList){
+        this.fridgeDataList = fridgeDataList;
+    }
+
     @NonNull
     @Override
     public IngredientListAdapter.IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -22,13 +42,36 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
         return new IngredientViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull IngredientListAdapter.IngredientViewHolder holder, int position) {
+        FridgeData item = fridgeDataList.get(position);
 
+        holder.name.setText(item.name);
+        holder.remainED.setText(String.valueOf(item.remainED));
+        holder.EDProgressBar.setProgress((int)item.remainED*100/(int)item.totalED);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return fridgeDataList.size();
+    }
+
+    public static class IngredientViewHolder extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView name;
+        TextView remainED;
+        ProgressBar EDProgressBar;
+
+        public IngredientViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            image = itemView.findViewById(R.id.iv_ingredientImage);
+            name = itemView.findViewById(R.id.tv_ingredientName);
+            remainED = itemView.findViewById(R.id.tv_ingredientED);
+            EDProgressBar = itemView.findViewById(R.id.pb_edProgressBar);
+        }
+
+
     }
 }

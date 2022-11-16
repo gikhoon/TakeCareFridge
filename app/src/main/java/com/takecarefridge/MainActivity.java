@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                         StorageReference pathReference = storageRef.child(path);
 
                         Glide.with(MainActivity.this)
-                                .load(pathReference)
+                                .load(pathReference).placeholder(R.drawable.ic_launcher_background)
                                 .into(iv);
                     }
                 }
