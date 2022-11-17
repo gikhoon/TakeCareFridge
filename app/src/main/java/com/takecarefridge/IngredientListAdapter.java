@@ -70,8 +70,8 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             holder.remainED.setText(item.remainED+"\n(만료)");
         }
         else {
-            holder.EDProgressBar.setProgress((int) item.remainED * 100 / (int) item.totalED);
-            holder.remainED.setText(String.valueOf(item.remainED));
+            holder.EDProgressBar.setProgress((int)item.remainED); //남은 일자로 수정
+            holder.remainED.setText(String.valueOf(item.remainED+"일"));
         }
     }
 

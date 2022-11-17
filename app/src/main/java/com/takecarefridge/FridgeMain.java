@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 public class FridgeMain extends AppCompatActivity {
@@ -44,7 +45,6 @@ public class FridgeMain extends AppCompatActivity {
         setContentView(R.layout.fridge_main);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseStorage storage = FirebaseStorage.getInstance();
 
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
 
@@ -56,16 +56,15 @@ public class FridgeMain extends AppCompatActivity {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(document.exists()){
-                                    System.out.println("성공!!!!!!!!!!!!");
-                                //RemainED 구하기
+
+                                    //RemainED 구하기
                                     Timestamp registerTS = document.getTimestamp("timestamp");
                                     long totalEd = document.getLong("유통기한");
 
                                     long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
                                     long remainED = totalEd-(seconds/(60*60*24));
 
-                                //TotalEd
-
+                                    //TotalEd 구하기
                                     String imagePath = document.getString("이미지");
                                     String name = document.getId();
 
@@ -76,6 +75,7 @@ public class FridgeMain extends AppCompatActivity {
                                     fridgeDataList.add(fd);
                                 }
                             }
+                            Collections.sort(fridgeDataList);
 
                             //출력
                             mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);

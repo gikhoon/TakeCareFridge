@@ -4,9 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,15 +31,46 @@ public class FreezerMain extends AppCompatActivity {
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
 
 
-        Collections.sort(fridgeDataList);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
+        db.collection("사용자").document("asd")
+                .collection("냉동실")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                if(document.exists()){
 
-        //출력
-        mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
-        mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+                                    //RemainED 구하기
+                                    Timestamp registerTS = document.getTimestamp("timestamp");
+                                    long totalEd = document.getLong("유통기한");
 
-        mFridgeList.setAdapter(mIngredientListAdapter);
-        mFridgeList.setLayoutManager(new LinearLayoutManager(this));
+                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
+                                    long remainED = totalEd-(seconds/(60*60*24));
+
+                                    //TotalEd 구하기
+                                    String imagePath = document.getString("이미지");
+                                    String name = document.getId();
+
+                                    System.out.println(remainED+" "+name);
+
+                                    FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
+
+                                    fridgeDataList.add(fd);
+                                }
+                            }
+                            Collections.sort(fridgeDataList);
+
+                            //출력
+                            mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+                            mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+
+                            mFridgeList.setAdapter(mIngredientListAdapter);
+                            mFridgeList.setLayoutManager(new LinearLayoutManager(FreezerMain.this));
+                        }
+                    }
+                });
     }
 
     public void goMainActivity(View v){
