@@ -11,14 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 class FridgeData implements Comparable<FridgeData>{
+    String imagePath;
     String name; //재료 이름
     long totalED; //등록일 기준으로 유통기한 ED==유통기한(expiration date)
     long remainED; //남은 유통기한
 
-    public FridgeData(String name,int totalED, int remainED){
+    public FridgeData(String imagePath,String name,long totalED, long remainED){
+        this.imagePath = imagePath;
         this.name= name;
         this.totalED=totalED;
         this.remainED = remainED;
@@ -52,9 +58,21 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     public void onBindViewHolder(@NonNull IngredientListAdapter.IngredientViewHolder holder, int position) {
         FridgeData item = fridgeDataList.get(position);
 
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child(item.imagePath);
+
+        Glide.with(holder.image.getContext()).load(pathReference).into(holder.image);
         holder.name.setText(item.name);
-        holder.remainED.setText(String.valueOf(item.remainED));
-        holder.EDProgressBar.setProgress((int)item.remainED*100/(int)item.totalED);
+
+        if(item.remainED<0){
+            holder.EDProgressBar.setProgress(0);
+            holder.remainED.setText(item.remainED+"\n(만료)");
+        }
+        else {
+            holder.EDProgressBar.setProgress((int) item.remainED * 100 / (int) item.totalED);
+            holder.remainED.setText(String.valueOf(item.remainED));
+        }
     }
 
     @Override

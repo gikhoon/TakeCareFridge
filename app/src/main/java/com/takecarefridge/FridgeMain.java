@@ -39,11 +39,14 @@ public class FridgeMain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_main);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
+
+        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
 
         db.collection("사용자").document("asd")
                 .collection("냉장실")
@@ -52,57 +55,37 @@ public class FridgeMain extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
-                                Timestamp registerTS = document.getTimestamp("timestamp");
-                                long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
-                                long betweenDate = seconds/(60*60*24);
+                                if(document.exists()){
+                                    System.out.println("성공!!!!!!!!!!!!");
+                                //RemainED 구하기
+                                    Timestamp registerTS = document.getTimestamp("timestamp");
+                                    long totalEd = document.getLong("유통기한");
 
+                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
+                                    long remainED = totalEd-(seconds/(60*60*24));
 
+                                //TotalEd
+
+                                    String imagePath = document.getString("이미지");
+                                    String name = document.getId();
+
+                                    System.out.println(remainED+" "+name);
+
+                                    FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
+
+                                    fridgeDataList.add(fd);
+                                }
                             }
+
+                            //출력
+                            mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
+                            mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+
+                            mFridgeList.setAdapter(mIngredientListAdapter);
+                            mFridgeList.setLayoutManager(new LinearLayoutManager(FridgeMain.this));
                         }
                     }
                 });
-
-        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
-
-
-
-        FridgeData data = new FridgeData("계란", 180, 60);
-        FridgeData data2 = new FridgeData("육회", 10, 3);
-        FridgeData data3 = new FridgeData("사과", 100, 20);
-        FridgeData data4 = new FridgeData("배", 180, 60);
-        FridgeData data5 = new FridgeData("포도", 180, 60);
-        FridgeData data6 = new FridgeData("포도", 180, 60);
-        FridgeData data7 = new FridgeData("포도", 180, 60);
-        FridgeData data8 = new FridgeData("포도", 180, 60);
-        FridgeData data9 = new FridgeData("포도", 180, 60);
-        FridgeData data10 = new FridgeData("포도", 180, 60);
-        FridgeData data11 = new FridgeData("포도", 180, 60);
-        FridgeData data12 = new FridgeData("포도", 180, 60);
-        FridgeData data13 = new FridgeData("포도", 180, 60);
-        FridgeData data14 = new FridgeData("포도", 180, 60);
-
-        fridgeDataList.add(data);
-        fridgeDataList.add(data2);
-        fridgeDataList.add(data3);
-        fridgeDataList.add(data4);
-        fridgeDataList.add(data5);
-        fridgeDataList.add(data6);
-        fridgeDataList.add(data7);
-        fridgeDataList.add(data8);
-        fridgeDataList.add(data9);
-        fridgeDataList.add(data10);
-        fridgeDataList.add(data11);
-        fridgeDataList.add(data12);
-        fridgeDataList.add(data13);
-        fridgeDataList.add(data14);
-
-
-        //출력
-        mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
-        mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
-
-        mFridgeList.setAdapter(mIngredientListAdapter);
-        mFridgeList.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
