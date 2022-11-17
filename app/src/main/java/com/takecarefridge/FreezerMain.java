@@ -52,11 +52,9 @@ public class FreezerMain extends AppCompatActivity {
                                     //TotalEd 구하기
                                     String imagePath = document.getString("이미지");
                                     String name = document.getId();
-
-                                    System.out.println(remainED+" "+name);
-
+                                    
+                                    //DataList에 넣기
                                     FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
-
                                     fridgeDataList.add(fd);
                                 }
                             }
