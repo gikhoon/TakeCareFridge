@@ -32,7 +32,7 @@
         android:layout_height="0dp">
 
         <LinearLayout
-            android:id="@+id/fridge_menu"
+            android:id="@+id/freezer_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="10">
@@ -59,7 +59,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_freezerListRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/freezer_menu"/>
 
     </RelativeLayout>
     <RelativeLayout
