@@ -58,7 +58,6 @@ public class FridgeMain extends AppCompatActivity {
 
         mFridgeList.setAdapter(mIngredientListAdapter);
         mFridgeList.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
 
