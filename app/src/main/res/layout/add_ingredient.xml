@@ -32,6 +32,7 @@
             android:background="@drawable/backspace_right2" />
 
         <TextView
+            android:id="@+id/tv"
             android:layout_width="243dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -51,7 +52,7 @@
         android:layout_height="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_fridgeListRecyclerView"
+            android:id="@+id/rv_addIngredientListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

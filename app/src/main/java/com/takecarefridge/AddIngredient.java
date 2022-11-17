@@ -14,8 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -37,19 +43,58 @@ public class AddIngredient extends AppCompatActivity {
         setContentView(R.layout.add_ingredient);
 
         ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
-        IngredientData data = new IngredientData("육류");
-        IngredientData data2 = new IngredientData("채소");
-        IngredientData data3 = new IngredientData("과일");
+        IngredientData data = new IngredientData("육류","재료/육류.png");
 
         ingredientDataList.add(data);
-        ingredientDataList.add(data2);
-        ingredientDataList.add(data3);
 
-        /*mIngredientList = findViewById(R.id.rv_fridgeListRecyclerView);
+        mIngredientList = findViewById(R.id.rv_addIngredientListRecyclerView);
         mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
 
         mIngredientList.setAdapter(mAddIngredientListAdapter);
-        mIngredientList.setLayoutManager(new LinearLayoutManager(this));*/
+        mIngredientList.setLayoutManager(new LinearLayoutManager(this));
+
+        /*FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
+
+        db.collection("사용자").document("asd")
+                .collection("냉장실")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                if(document.exists()){
+                                    //RemainED 구하기
+                                    Timestamp registerTS = document.getTimestamp("timestamp");
+                                    long totalEd = document.getLong("유통기한");
+
+                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
+                                    long remainED = totalEd-(seconds/(606024));
+
+                                    //TotalEd
+
+                                    String imagePath = document.getString("이미지");
+                                    String name = document.getId();
+
+                                    System.out.println(remainED+" "+name);
+
+                                    FridgeData fd = new FridgeData(imagePath,name);
+
+                                    fridgeDataList.add(fd);
+                                }
+                            }
+
+                            mIngredientList = findViewById(R.id.rv_fridgeListRecyclerView);
+                            mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
+
+                            mIngredientList.setAdapter(mAddIngredientListAdapter);
+                            mIngredientList.setLayoutManager(new LinearLayoutManager(this));
+                        }
+                    }
+                });*/
+
+    }
 
         //TextView tv = new TextView(this);
         //tv.setText(before);
@@ -76,10 +121,8 @@ public class AddIngredient extends AppCompatActivity {
             });
         }*/
 
-    }
-
     public void goBeforeActivity(View v) {
-        if (before == "Freezer") startActivity(new Intent(this, FreezerMain.class));
-        else if (before == "Fridge") startActivity(new Intent(this, FridgeMain.class));
+        if (before.equals("Freezer")) startActivity(new Intent(this, FreezerMain.class));
+        else if (before.equals("Fridge")) startActivity(new Intent(this, FridgeMain.class));
     }
 }
