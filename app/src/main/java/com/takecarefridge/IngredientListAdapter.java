@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-class FridgeData{
+class FridgeData implements Comparable<FridgeData>{
     String name; //재료 이름
     long totalED; //등록일 기준으로 유통기한 ED==유통기한(expiration date)
     long remainED; //남은 유통기한
@@ -22,6 +22,14 @@ class FridgeData{
         this.name= name;
         this.totalED=totalED;
         this.remainED = remainED;
+    }
+
+    @Override
+    public int compareTo(FridgeData fridgeData) {
+        if(remainED > fridgeData.remainED){
+            return 1;
+        }
+        else return -1;
     }
 }
 
