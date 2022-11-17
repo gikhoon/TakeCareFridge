@@ -53,20 +53,12 @@ public class AddIngredientListAdapter extends RecyclerView.Adapter<AddIngredient
 
         holder.name.setText(item.name);
 
-        /*FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
-        StorageReference submitPng = storageRef.child("재료/육류.png");
-        submitPng.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(holder.image.getContext()).load(uri).into(holder.image);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });*/
+        StorageReference submitPng = storageRef.child(item.imagePath);
+
+        Glide.with(holder.image.getContext()).load(submitPng).into(holder.image);
     }
 
 
@@ -81,8 +73,8 @@ public class AddIngredientListAdapter extends RecyclerView.Adapter<AddIngredient
 
         public AddIngredientViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.iv_ingredientImage);
-            name = itemView.findViewById(R.id.tv_ingredientName);
+            image = itemView.findViewById(R.id.iv_addingredientImage);
+            name = itemView.findViewById(R.id.tv_addingredientName);
         }
     }
 }

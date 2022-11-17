@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="350dp"
     android:layout_height="70dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginTop="5dp"
     android:orientation="horizontal"
-    android:background="@drawable/blue_bar_right2">
+    android:background="@drawable/blue_bar_right2"
+    android:layout_centerHorizontal="true">
     <ImageView
         android:id="@+id/iv_addingredientImage"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@color/white"
@@ -14,14 +18,14 @@
 
     <TextView
         android:id="@+id/tv_addingredientName"
-        android:layout_width="80dp"
+        android:layout_marginStart="75dp"
+        android:layout_width="120dp"
         android:layout_height="match_parent"
-        android:text="이름"
         android:gravity="center"
         android:fontFamily="@font/basic_font"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:textSize="22sp"/>
+        android:textSize="25sp"/>
 
     <!--<TextView
         android:id="@+id/tv_addingredient"

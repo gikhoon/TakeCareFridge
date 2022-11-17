@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,7 +43,10 @@ public class AddIngredient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_ingredient);
 
-        ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        /*ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
         IngredientData data = new IngredientData("육류","재료/육류.png");
 
         ingredientDataList.add(data);
@@ -51,48 +55,36 @@ public class AddIngredient extends AppCompatActivity {
         mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
 
         mIngredientList.setAdapter(mAddIngredientListAdapter);
-        mIngredientList.setLayoutManager(new LinearLayoutManager(this));
+        mIngredientList.setLayoutManager(new LinearLayoutManager(this));*/
 
-        /*FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
+        ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
 
-        db.collection("사용자").document("asd")
-                .collection("냉장실")
+        db.collection("재료")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(document.exists()){
-                                    //RemainED 구하기
-                                    Timestamp registerTS = document.getTimestamp("timestamp");
-                                    long totalEd = document.getLong("유통기한");
-
-                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
-                                    long remainED = totalEd-(seconds/(606024));
-
-                                    //TotalEd
-
-                                    String imagePath = document.getString("이미지");
                                     String name = document.getId();
+                                    String imagePath = document.getString("이미지");
 
-                                    System.out.println(remainED+" "+name);
+                                    IngredientData fd = new IngredientData(name,imagePath);
 
-                                    FridgeData fd = new FridgeData(imagePath,name);
-
-                                    fridgeDataList.add(fd);
+                                    ingredientDataList.add(fd);
                                 }
                             }
 
-                            mIngredientList = findViewById(R.id.rv_fridgeListRecyclerView);
+                            mIngredientList = findViewById(R.id.rv_addIngredientListRecyclerView);
                             mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
 
                             mIngredientList.setAdapter(mAddIngredientListAdapter);
-                            mIngredientList.setLayoutManager(new LinearLayoutManager(this));
+                            mIngredientList.setLayoutManager(new LinearLayoutManager(AddIngredient.this));
                         }
                     }
-                });*/
+                });
 
     }
 
