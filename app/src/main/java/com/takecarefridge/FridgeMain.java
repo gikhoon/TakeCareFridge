@@ -37,7 +37,8 @@ public class FridgeMain extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
-
+        
+        //asd는 추후 회원가입 완료하면 넣어줘야함
         db.collection("사용자").document("asd")
                 .collection("냉장실")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

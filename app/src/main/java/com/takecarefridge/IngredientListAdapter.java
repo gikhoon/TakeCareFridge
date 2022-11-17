@@ -1,5 +1,8 @@
 package com.takecarefridge;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,8 +73,11 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             holder.remainED.setText(item.remainED+"\n(만료)");
         }
         else {
+            if(item.remainED<=10){
+                holder.EDProgressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+            }
             holder.EDProgressBar.setProgress((int)item.remainED); //남은 일자로 수정
-            holder.remainED.setText(String.valueOf(item.remainED+"일"));
+            holder.remainED.setText(item.remainED+"일");
         }
     }
 
