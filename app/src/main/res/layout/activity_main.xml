@@ -26,12 +26,6 @@
             android:layout_toEndOf="@id/shoppingBag"
             android:onClick="goRecipeMain"/>
 
-        <ImageView
-            android:id="@+id/test2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:src="@color/black"
-            android:layout_toEndOf="@id/bt_recipe"/>
 
     </RelativeLayout>
 
