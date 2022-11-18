@@ -48,6 +48,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
     private IngredientListAdapter.OnItemClickListener mListener = null;
 
+    //FridgeMain, FreezerMain에서 온클릭 함수 구현시키면 된다.
     public void setOnItemClickListener(IngredientListAdapter.OnItemClickListener listener){
         this.mListener = listener;
     }

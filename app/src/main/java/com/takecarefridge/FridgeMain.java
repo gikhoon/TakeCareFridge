@@ -72,6 +72,7 @@ public class FridgeMain extends AppCompatActivity {
                             mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
                             mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
 
+                            //view홀더 하나하나 클릭시 실행되는 onClickMethod
                             mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View v, FridgeData data) {
