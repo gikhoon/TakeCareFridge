@@ -36,6 +36,7 @@
             android:progress="90" />
 
         <TextView
+            android:id="@+id/tv_freezerFreshness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

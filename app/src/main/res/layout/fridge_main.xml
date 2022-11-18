@@ -37,6 +37,7 @@
             android:layout_marginEnd="30dp"
             android:progress="90" />
         <TextView
+            android:id="@+id/tv_fridgeFreshness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -66,6 +67,7 @@
                 android:text="남은 유통기한"
                 android:gravity="center"
                 android:layout_weight="2"/>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

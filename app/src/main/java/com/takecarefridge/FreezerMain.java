@@ -1,8 +1,12 @@
 package com.takecarefridge;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -34,7 +38,9 @@ public class FreezerMain extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
-        showFreezerScreen("asd");//RecyclerView 출력시켜주는 코드 ( 추후 userId에 회원 ID 넣어야함)
+        showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+
+        showTotalFreshness("asd"); //전체 게이지 출력 메소드
     }
 
     public void showFreezerScreen(String userID){
@@ -85,6 +91,51 @@ public class FreezerMain extends AppCompatActivity {
                             mFridgeList.setAdapter(mIngredientListAdapter);
                             mFridgeList.setLayoutManager(new LinearLayoutManager(FreezerMain.this));
                         }
+                    }
+                });
+    }
+
+    public void showTotalFreshness(String userID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("사용자").document(userID)
+                .collection("냉동실")
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        long addAllDate = 0;
+                        int num = 0;
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.exists()) {
+                                    Timestamp registerTS = document.getTimestamp("timestamp");
+                                    long totalEd = document.getLong("유통기한");
+
+                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
+                                    long remainED = totalEd-(seconds/(60*60*24));
+                                    if(remainED<0){remainED=0;}
+                                    if(remainED>100) {remainED=100;}
+                                    addAllDate+=remainED;
+                                    num++;
+                                }
+                            }
+                        }
+                        ProgressBar pb = findViewById(R.id.pb_freezerTotalED);
+                        TextView freshnessTV = findViewById(R.id.tv_freezerFreshness);
+                        int totalEDProgress;
+                        if(num>0) {
+                            totalEDProgress = (int) addAllDate / num;
+                        }else{
+                            totalEDProgress=0;
+                        }
+                        if(totalEDProgress<=10){
+                            pb.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                        }
+
+                        if(totalEDProgress>100) {totalEDProgress=100;}
+                        pb.setProgress(totalEDProgress);
+                        freshnessTV.setText(totalEDProgress+"점");
                     }
                 });
     }
