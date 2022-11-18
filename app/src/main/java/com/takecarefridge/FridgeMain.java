@@ -3,6 +3,8 @@ package com.takecarefridge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -27,12 +29,13 @@ public class FridgeMain extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_main);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        Intent getIntent = getIntent();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -68,6 +71,13 @@ public class FridgeMain extends AppCompatActivity {
                             //출력
                             mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
                             mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+
+                            mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, FridgeData data) {
+                                    System.out.println(data.name);
+                                }
+                            });
 
                             mFridgeList.setAdapter(mIngredientListAdapter);
                             mFridgeList.setLayoutManager(new LinearLayoutManager(FridgeMain.this));

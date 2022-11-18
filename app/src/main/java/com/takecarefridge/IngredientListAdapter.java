@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,15 +46,25 @@ class FridgeData implements Comparable<FridgeData>{
 public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAdapter.IngredientViewHolder> {
     ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
 
+    private IngredientListAdapter.OnItemClickListener mListener = null;
+
+    public void setOnItemClickListener(IngredientListAdapter.OnItemClickListener listener){
+        this.mListener = listener;
+    }
+
     public IngredientListAdapter(ArrayList<FridgeData> fridgeDataList){
         this.fridgeDataList = fridgeDataList;
     }
+
 
     @NonNull
     @Override
     public IngredientListAdapter.IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_list,parent,false);
         return new IngredientViewHolder(view);
+    }
+    public interface OnItemClickListener{
+        void onItemClick(View v, FridgeData data);
     }
 
 
@@ -79,6 +90,17 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
             holder.EDProgressBar.setProgress((int)item.remainED); //남은 일자로 수정
             holder.remainED.setText(item.remainED+"일");
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos  = holder.getAdapterPosition();
+                if(pos != RecyclerView.NO_POSITION){
+                    if(mListener != null)
+                        mListener.onItemClick(view, fridgeDataList.get(pos));
+                }
+            }
+        });
     }
 
     @Override
