@@ -14,17 +14,34 @@
             android:text="뒤로 가기"
             android:onClick="goMainActivity"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
         <TextView
+            android:id="@+id/tv_fridgeTotalED"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="냉장실 신선도"
+            android:layout_centerHorizontal="true"/>
+
+        <ProgressBar
+            android:id="@+id/pb_fridgeTotalED"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="냉장실"
-            android:textSize="50dp"/>
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_below="@id/tv_fridgeTotalED"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:progress="90" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="신선도"
+            android:layout_below="@id/pb_fridgeTotalED"/>
 
     </RelativeLayout>
     <RelativeLayout
