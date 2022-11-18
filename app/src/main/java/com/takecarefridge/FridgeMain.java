@@ -26,7 +26,6 @@ public class FridgeMain extends AppCompatActivity {
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +36,16 @@ public class FridgeMain extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
+        showFridgeScreen("asd"); //유저ID넣어주면 됨
+
+    }
+
+    public void showFridgeScreen(String userID){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
-        
-        //asd는 추후 회원가입 완료하면 넣어줘야함
-        db.collection("사용자").document("asd")
+
+        db.collection("사용자").document(userID)
                 .collection("냉장실")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

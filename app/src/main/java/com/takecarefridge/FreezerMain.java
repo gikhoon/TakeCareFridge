@@ -32,12 +32,18 @@ public class FreezerMain extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        Intent getIntent = getIntent();
+
+        showFreezerScreen("asd");//유저ID 넣어주면 됨
+    }
+
+    public void showFreezerScreen(String userID){
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
-        db.collection("사용자").document("asd")
+        db.collection("사용자").document(userID)
                 .collection("냉동실")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -56,7 +62,7 @@ public class FreezerMain extends AppCompatActivity {
                                     //TotalEd 구하기
                                     String imagePath = document.getString("이미지");
                                     String name = document.getId();
-                                    
+
                                     //DataList에 넣기
                                     FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
                                     fridgeDataList.add(fd);
@@ -82,7 +88,6 @@ public class FreezerMain extends AppCompatActivity {
                     }
                 });
     }
-
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
     }
