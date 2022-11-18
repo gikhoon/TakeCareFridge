@@ -34,7 +34,7 @@ public class FreezerMain extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
-        showFreezerScreen("asd");//유저ID 넣어주면 됨
+        showFreezerScreen("asd");//RecyclerView 출력시켜주는 코드 ( 추후 userId에 회원 ID 넣어야함)
     }
 
     public void showFreezerScreen(String userID){

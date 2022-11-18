@@ -31,13 +31,15 @@ public class FridgeMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_main);
 
+        //맨위에 액션바 없애주는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
         Intent getIntent = getIntent();
 
-        showFridgeScreen("asd"); //유저ID넣어주면 됨
-
+        //RecyclerView 출력시켜주는 코드
+        showFridgeScreen("asd"); //추후 userId에 회원 ID 넣어야함
+        
     }
 
     public void showFridgeScreen(String userID){
@@ -90,7 +92,6 @@ public class FridgeMain extends AppCompatActivity {
                 });
 
     }
-
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
