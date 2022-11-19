@@ -93,7 +93,7 @@ public class FreezerMain extends AppCompatActivity {
                             });
 
                             mFridgeList.setAdapter(mIngredientListAdapter);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 2);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 3);
                             mFridgeList.setLayoutManager(gridLayoutManager);
                         }
                     }

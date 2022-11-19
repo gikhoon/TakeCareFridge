@@ -49,36 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
-        <LinearLayout
-            android:id="@+id/freezer_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="재료"
-                android:gravity="center"
-                android:layout_weight="4"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="남은 유통기한"
-                android:gravity="center"
-                android:layout_weight="2"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="신선도"
-                android:gravity="center"
-                android:layout_weight="4"/>
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_freezerListRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/freezer_menu"/>
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
     <RelativeLayout

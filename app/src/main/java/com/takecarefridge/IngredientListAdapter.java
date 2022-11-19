@@ -82,7 +82,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
         if(item.remainED<0){
             holder.EDProgressBar.setProgress(0);
-            holder.remainED.setText(item.remainED+"일\n(만료)");
+            holder.remainED.setText(item.remainED+"일(만료)");
         }
         else {
             if(item.remainED<=10){
