@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -90,7 +91,8 @@ public class FridgeMain extends AppCompatActivity {
                             });
 
                             mFridgeList.setAdapter(mIngredientListAdapter);
-                            mFridgeList.setLayoutManager(new LinearLayoutManager(FridgeMain.this));
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FridgeMain.this, 2);
+                            mFridgeList.setLayoutManager(gridLayoutManager);
                         }
                     }
                 });
