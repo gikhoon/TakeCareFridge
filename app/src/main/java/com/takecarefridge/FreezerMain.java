@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -43,7 +45,7 @@ public class FreezerMain extends AppCompatActivity {
 
         showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
 
-        showTotalFreshness("asd"); //전체 게이지 출력 메소드
+        //showTotalFreshness("asd"); //전체 게이지 출력 메소드
     }
 
     public void showFreezerScreen(String userID){
@@ -52,35 +54,60 @@ public class FreezerMain extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
-        db.collection("사용자").document(userID)
-                .collection("냉동실")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉동실");
+
+                bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(document.exists()){
+                                    Log.d("Hello", document.getId());
 
-                                    //RemainED 구하기
-                                    Timestamp registerTS = document.getTimestamp("timestamp");
-                                    long totalEd = document.getLong("유통기한");
+                                    String bigIngredientName = document.getId();
+                                    CollectionReference smallIngredientRef = bigIngredientRef.document("육류")
+                                            .collection("육류");
+                                    smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Log.d("Hello2", document.getId());
+                                                //RemainED 구하기
+                                                Timestamp registerTS = document.getTimestamp("timestamp");
+                                                long totalEd = document.getLong("유통기한");
 
-                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
-                                    long remainED = totalEd-(seconds/(60*60*24));
+                                                long seconds = Timestamp.now().getSeconds() - registerTS.getSeconds();
+                                                long remainED = totalEd - (seconds / (60 * 60 * 24));
 
-                                    //TotalEd 구하기
-                                    String imagePath = document.getString("이미지");
-                                    String name = document.getId();
+                                                //TotalEd 구하기
+                                                String imagePath = document.getString("이미지");
+                                                String name = document.getString("분류");
+                                                //DataList에 넣기
+                                                FridgeData fd = new FridgeData(imagePath, name, totalEd, remainED, 1);
+                                                fridgeDataList.add(fd);
+                                            }
+                                            Log.d("SUM", "갯수1: "+fridgeDataList.size());
 
-                                    //DataList에 넣기
-                                    FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
-                                    fridgeDataList.add(fd);
+                                            mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+                                            mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+                                            mFridgeList.setAdapter(mIngredientListAdapter);
+                                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 3);
+                                            mFridgeList.setLayoutManager(gridLayoutManager);
+
+                                        }
+
+
+                                    });
+
                                 }
                             }
-                            Collections.sort(fridgeDataList);
+
+                            Log.d("SUM", "갯수2: "+fridgeDataList.size());
 
                             //출력
-                            mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+                            /*mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
                             mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
 
                             //view홀더 하나하나 클릭시 실행되는 onClickMethod
@@ -93,8 +120,8 @@ public class FreezerMain extends AppCompatActivity {
                             });
 
                             mFridgeList.setAdapter(mIngredientListAdapter);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 3);
-                            mFridgeList.setLayoutManager(gridLayoutManager);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 1);
+                            mFridgeList.setLayoutManager(gridLayoutManager);*/
                         }
                     }
                 });
@@ -144,6 +171,7 @@ public class FreezerMain extends AppCompatActivity {
                     }
                 });
     }
+
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
     }

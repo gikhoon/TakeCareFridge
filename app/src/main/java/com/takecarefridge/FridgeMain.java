@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
@@ -60,7 +61,6 @@ public class FridgeMain extends AppCompatActivity {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(document.exists()){
-
                                     //RemainED 구하기
                                     Timestamp registerTS = document.getTimestamp("timestamp");
                                     long totalEd = document.getLong("유통기한");
@@ -72,7 +72,7 @@ public class FridgeMain extends AppCompatActivity {
                                     String imagePath = document.getString("이미지");
                                     String name = document.getId();
 
-                                    FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED);
+                                    FridgeData fd = new FridgeData(imagePath,name , totalEd, remainED,0);
                                     fridgeDataList.add(fd);
                                 }
                             }
