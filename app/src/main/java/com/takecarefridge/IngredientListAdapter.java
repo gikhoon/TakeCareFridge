@@ -67,7 +67,6 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        Log.d("HHH",position+String.valueOf(fridgeDataList.get(position).viewType));
         return fridgeDataList.get(position).viewType;
     }
 
@@ -76,11 +75,9 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == Code.TYPE_HEADER) {
-            Log.d("HHH", "HEADER");
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_list_menu, parent, false);
             return new IngredientHeaderViewHolder(view);
         } else {
-            Log.d("HHH", "BODY");
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.ingredient_list, parent, false);
             return new IngredientBodyViewHolder(view);
         }

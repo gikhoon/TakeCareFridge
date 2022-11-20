@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -63,17 +64,15 @@ public class FreezerMain extends AppCompatActivity {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 if(document.exists()){
-                                    Log.d("Hello", document.getId());
-
                                     String bigIngredientName = document.getId();
-                                    CollectionReference smallIngredientRef = bigIngredientRef.document("육류")
-                                            .collection("육류");
+
+                                    CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
+                                            .collection(bigIngredientName);
                                     smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                Log.d("Hello2", document.getId());
                                                 //RemainED 구하기
                                                 Timestamp registerTS = document.getTimestamp("timestamp");
                                                 long totalEd = document.getLong("유통기한");
@@ -88,40 +87,42 @@ public class FreezerMain extends AppCompatActivity {
                                                 FridgeData fd = new FridgeData(imagePath, name, totalEd, remainED, 1);
                                                 fridgeDataList.add(fd);
                                             }
-                                            Log.d("SUM", "갯수1: "+fridgeDataList.size());
 
                                             mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+
+                                            //setAdapter
                                             mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+                                            mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
+                                                @Override
+                                                public void onItemClick(View v, FridgeData data) {
+                                                    Log.d("HELLO", data.imagePath);
+                                                    PopupMenu popup = new PopupMenu(getApplicationContext(),v);
+
+                                                }
+                                            });
                                             mFridgeList.setAdapter(mIngredientListAdapter);
+
+                                            //set
                                             GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 3);
+                                            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+                                                @Override
+                                                public int getSpanSize(int position) {
+                                                    if(mFridgeList.getAdapter().getItemViewType(position)==0){
+                                                        return 3;
+                                                    }else{
+                                                        return 1;
+                                                    }
+                                                }
+                                            });
                                             mFridgeList.setLayoutManager(gridLayoutManager);
 
                                         }
 
 
                                     });
-
                                 }
                             }
 
-                            Log.d("SUM", "갯수2: "+fridgeDataList.size());
-
-                            //출력
-                            /*mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
-                            mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
-
-                            //view홀더 하나하나 클릭시 실행되는 onClickMethod
-                            mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View v, FridgeData data) {
-                                    PopupMenu popup = new PopupMenu(getApplicationContext(),v);
-
-                                }
-                            });
-
-                            mFridgeList.setAdapter(mIngredientListAdapter);
-                            GridLayoutManager gridLayoutManager = new GridLayoutManager(FreezerMain.this, 1);
-                            mFridgeList.setLayoutManager(gridLayoutManager);*/
                         }
                     }
                 });
