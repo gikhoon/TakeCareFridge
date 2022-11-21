@@ -18,6 +18,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+        <EditText
+            android:id="@+id/user_NicName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="10dp"
+            android:gravity="left"
+            android:textSize="15dp"
+            android:hint="닉네임"/>
+
+        <Button
+            android:id="@+id/NickName_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="닉네임 중복확인" />
+
         <EditText
             android:id="@+id/user_id"
             android:layout_width="match_parent"
@@ -47,6 +65,7 @@
             android:gravity="left"
             android:textSize="15dp"
             android:hint="비밀번호 확인"/>
+
 
         <Button
             android:id="@+id/id_check"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,21 +29,65 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class LoginScreen extends AppCompatActivity {
 
+    //로그인
+    Button mLoginBtn;
+    private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
+
+
+    //구글 로그인
     private SignInButton signInButton;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private String TAG="mainTag";
     private int RC_SIGN_IN=123;
+    private EditText editTextEmail;
+    private EditText editTextpassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+
+
+        editTextEmail = (EditText)findViewById(R.id.loginId);
+        editTextpassword = (EditText)findViewById(R.id.loginPassword);
         signInButton = findViewById(R.id.login_button);
+        mLoginBtn = findViewById(R.id.loginButton);
+
+
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = editTextEmail.getText().toString().trim();
+                String pwd =editTextpassword.getText().toString().trim();
+                firebaseAuth.signInWithEmailAndPassword(email, pwd)
+                        .addOnCompleteListener(LoginScreen.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if(task.isSuccessful()){
+                                    startActivity(new Intent(LoginScreen.this, MainActivity.class));
+                                    Toast.makeText(LoginScreen.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(LoginScreen.this, "로그인 오류 발생", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+            }
+        });
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -63,8 +108,45 @@ public class LoginScreen extends AppCompatActivity {
             }
         });
 
+        Button googleLogin= (Button)findViewById(R.id.btn_signup);
         //가입 버튼이 눌리면
+       googleLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(LoginScreen.this, Signup.class);
+                startActivity(intent);
+            }
+        });
+
+        /*editTextEmail = (EditText)findViewById(R.id.loginId);
+        editTextpassword = (EditText)findViewById(R.id.loginPassword);
+        Button emailLogin = (Button) findViewById(R.id.loginButton);
+        emailLogin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                createUser(editTextEmail.getText().toString(), editTextpassword.getText().toString());
+            }
+        });*/
     }
+
+    /*private void createUser(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            startActivity(new Intent(LoginScreen.this, MainActivity.class));
+                            Toast.makeText(LoginScreen.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginScreen.this, "로그인 실패",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }*/
+
     // [START on_start_check_user]
     @Override
     public void onStart() {
@@ -74,6 +156,9 @@ public class LoginScreen extends AppCompatActivity {
         //updateUI(currentUser);
     }
     // [END on_start_check_user]
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
