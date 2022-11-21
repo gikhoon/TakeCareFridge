@@ -1,65 +1,228 @@
 package com.takecarefridge;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class FridgeMain extends AppCompatActivity {
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
-
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_main);
 
-        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
-        FridgeData data = new FridgeData("계란", 180, 60);
-        FridgeData data2 = new FridgeData("육회", 10, 3);
-        FridgeData data3 = new FridgeData("사과", 100, 20);
-        FridgeData data4 = new FridgeData("배", 180, 60);
-        FridgeData data5 = new FridgeData("포도", 180, 60);
-        FridgeData data6 = new FridgeData("포도", 180, 60);
-        FridgeData data7 = new FridgeData("포도", 180, 60);
-        FridgeData data8 = new FridgeData("포도", 180, 60);
-        FridgeData data9 = new FridgeData("포도", 180, 60);
-        FridgeData data10 = new FridgeData("포도", 180, 60);
-        FridgeData data11 = new FridgeData("포도", 180, 60);
-        FridgeData data12 = new FridgeData("포도", 180, 60);
-        FridgeData data13 = new FridgeData("포도", 180, 60);
-        FridgeData data14 = new FridgeData("포도", 180, 60);
+        //맨위에 액션바 없애주는 코드
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
-        fridgeDataList.add(data);
-        fridgeDataList.add(data2);
-        fridgeDataList.add(data3);
-        fridgeDataList.add(data4);
-        fridgeDataList.add(data5);
-        fridgeDataList.add(data6);
-        fridgeDataList.add(data7);
-        fridgeDataList.add(data8);
-        fridgeDataList.add(data9);
-        fridgeDataList.add(data10);
-        fridgeDataList.add(data11);
-        fridgeDataList.add(data12);
-        fridgeDataList.add(data13);
-        fridgeDataList.add(data14);
+        Intent getIntent = getIntent();
+        ID = "asd";
 
-
-        //출력
-        mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
-        mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
-
-        mFridgeList.setAdapter(mIngredientListAdapter);
-        mFridgeList.setLayoutManager(new LinearLayoutManager(this));
+        updateBigIngredientFreshness("asd");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showTotalFreshness(ID);//전체 게이지 출력 메소드
+        showFreezerScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+    }
+
+    public void showFreezerScreen(String userID){
+        ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();;
+
+
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉장실"); //대분류 Ref
+        bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        if(document.exists()){
+                            String bigIngredientName = document.getId();
+
+                            CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
+                                    .collection(bigIngredientName);
+                            smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if(!task.getResult().isEmpty()) {
+                                        fridgeDataList.add(new FridgeData(null, document.getId(),null, 0, 0, 0));
+                                    }
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        //RemainED 구하기
+                                        Timestamp registerTS = document.getTimestamp("timestamp");
+                                        long totalEd = document.getLong("유통기한");
+
+                                        long seconds = Timestamp.now().getSeconds() - registerTS.getSeconds();
+                                        long remainED = totalEd - (seconds / (60 * 60 * 24));
+
+                                        //TotalEd 구하기
+                                        String imagePath = document.getString("이미지");
+                                        String name = document.getString("분류");
+                                        String documentName = document.getId();
+                                        //DataList에 넣기
+                                        FridgeData fd = new FridgeData(imagePath, name, documentName, totalEd, remainED, 1);
+                                        fridgeDataList.add(fd);
+                                    }
+
+                                    mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+
+                                    //setAdapter
+                                    mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
+                                    mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View v, FridgeData data) {
+                                            Log.d("HELLO6", data.name);
+
+                                        }
+                                    });
+                                    mFridgeList.setAdapter(mIngredientListAdapter);
+
+                                    //set
+                                    GridLayoutManager gridLayoutManager = new GridLayoutManager(FridgeMain.this, 3);
+                                    gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+                                        @Override
+                                        public int getSpanSize(int position) {
+                                            if(mFridgeList.getAdapter().getItemViewType(position)==0){
+                                                return 3;
+                                            }else{
+                                                return 1;
+                                            }
+                                        }
+                                    });
+                                    mFridgeList.setLayoutManager(gridLayoutManager);
+
+                                }
+                            });
+                        }
+                    }
+
+                }
+            }
+        });
+    } //Recycler뷰 출력 함수
+
+    void updateBigIngredientFreshness(String userID) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉장실"); //대분류 Ref
+
+        bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.exists()) {
+                            String bigIngredientName = document.getId();
+
+                            CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
+                                    .collection(bigIngredientName);
+                            smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    int num = 0;
+                                    int addAllDate = 0;
+                                    for(QueryDocumentSnapshot document : task.getResult()) {
+                                        Timestamp registerTS = document.getTimestamp("timestamp");
+                                        long totalEd = document.getLong("유통기한");
+
+                                        long seconds = Timestamp.now().getSeconds() - registerTS.getSeconds();
+                                        long remainED = totalEd - (seconds / (60 * 60 * 24));
+                                        if (remainED < 0) {
+                                            remainED = 0;
+                                        }
+                                        if (remainED > 100) {
+                                            remainED = 100;
+                                        }
+                                        addAllDate += remainED;
+                                        num++;
+
+                                    }
+
+
+                                    DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
+                                    putFieldRef.update(bigIngredientName+"갯수",num);
+                                    putFieldRef.update("남은기한합",addAllDate);
+                                }
+                            });
+                        }
+
+                    }
+                }
+
+            }
+
+        });
+    } //남은 유통기한 합, 전체 갯수 업데이트
+
+    public void showTotalFreshness(String userID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉장실"); //대분류 Ref
+        bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                long totalED = 0;
+                long num =0;
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        if(document.exists()){
+                            totalED+=document.getLong("남은기한합");
+                            num+=document.getLong(document.getId() + "갯수");
+
+                        }
+                    }
+                    ProgressBar pb = findViewById(R.id.pb_freezerTotalED);
+                    TextView freshnessTV = findViewById(R.id.tv_freezerFreshness);
+                    int totalEDProgress;
+                    if (num > 0) {
+                        totalEDProgress = (int)(totalED / num);
+                    } else {
+                        totalEDProgress = 0;
+                    }
+                    if (totalEDProgress <= 10) {
+                        pb.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                    }
+
+                    if (totalEDProgress > 100) {
+                        totalEDProgress = 100;
+                    }
+                    pb.setProgress(totalEDProgress);
+                    freshnessTV.setText(totalEDProgress + "점");
+                }
+            }
+        });
+    } //값 totalProcess에 출력
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
