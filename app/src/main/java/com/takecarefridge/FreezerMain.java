@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +27,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class FreezerMain extends AppCompatActivity {
+
+public class FreezerMain extends AppCompatActivity implements View.OnClickListener{
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
 
@@ -34,6 +36,9 @@ public class FreezerMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.freezer_main);
+
+        Button FreezerPlusBtn = findViewById(R.id.freezer_plus);
+        FreezerPlusBtn.setOnClickListener(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -224,5 +229,12 @@ public class FreezerMain extends AppCompatActivity {
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent(FreezerMain.this, AddIngredient.class);
+        intent.putExtra("preActivity", "Freezer");
+        startActivity(intent);
     }
 }

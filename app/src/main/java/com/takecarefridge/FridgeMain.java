@@ -44,7 +44,6 @@ public class FridgeMain extends AppCompatActivity {
         ID = "asd";
 
         updateBigIngredientFreshness("asd");
-
     }
 
     @Override

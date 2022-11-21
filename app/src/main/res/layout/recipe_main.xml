@@ -6,62 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".AddIngredient"
     android:orientation="vertical"
-    android:weightSum="8">
+    android:weightSum="12">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로 가기"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2"
             android:onClick="goMainActivity"/>
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="레시피 목록"
-            android:textSize="30sp" />
+            android:id="@+id/tv"
+            android:layout_width="243dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bar_right2"
+            android:fontFamily="@font/basic_font"
+            android:gravity="center"
+            android:text="재료 추가 화면"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/backspace_right2"
+            android:elevation="10dp"
+            android:onClick="goAddRecipeActivity"
+            android:translationZ="10dp" />
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/plus2"
+            android:elevation="10dp"
+            android:translationZ="10dp" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-        <TextView
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/rm_editText"
+            android:hint="검색 창"
+            android:ems="10"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="검색 창"
-            android:textSize="60sp"/>
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="22sp"/>
 
     </RelativeLayout>
     <RelativeLayout
-        android:layout_weight="5"
+        android:layout_weight="10"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recipeListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="레시피 추가하기"
-            android:textSize="20sp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20sp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:text="플러스"/>
     </RelativeLayout>
 
 </LinearLayout>
