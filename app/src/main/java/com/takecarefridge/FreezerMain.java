@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.ipsec.ike.exceptions.IkeInternalException;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Map;
 
 public class FreezerMain extends AppCompatActivity {
     RecyclerView mFridgeList;
@@ -44,20 +46,27 @@ public class FreezerMain extends AppCompatActivity {
 
         Intent getIntent = getIntent();
 
-        showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+        updateBigIngredientFreshness("asd"); //목록 총 데이터 업데이트
 
-        //showTotalFreshness("asd"); //전체 게이지 출력 메소드
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showTotalFreshness("asd");//전체 게이지 출력 메소드
+        showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
     }
 
     public void showFreezerScreen(String userID){
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
-
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
-        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
-                .collection("냉동실");
 
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉동실"); //대분류 Ref
                 bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -71,7 +80,10 @@ public class FreezerMain extends AppCompatActivity {
                                     smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
+                                            Map<String, Object> map = document.getData();
+                                            if(task.isComplete()) {
+                                                fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
+                                            }
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 //RemainED 구하기
                                                 Timestamp registerTS = document.getTimestamp("timestamp");
@@ -95,7 +107,6 @@ public class FreezerMain extends AppCompatActivity {
                                             mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
                                                 @Override
                                                 public void onItemClick(View v, FridgeData data) {
-                                                    Log.d("HELLO", data.imagePath);
                                                     PopupMenu popup = new PopupMenu(getApplicationContext(),v);
 
                                                 }
@@ -117,8 +128,6 @@ public class FreezerMain extends AppCompatActivity {
                                             mFridgeList.setLayoutManager(gridLayoutManager);
 
                                         }
-
-
                                     });
                                 }
                             }
@@ -128,50 +137,101 @@ public class FreezerMain extends AppCompatActivity {
                 });
     }
 
+     void updateBigIngredientFreshness(String userID) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉동실"); //대분류 Ref
+
+        bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.exists()) {
+                            String bigIngredientName = document.getId();
+
+                            CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
+                                    .collection(bigIngredientName);
+                            smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    int num = 0;
+                                    int addAllDate = 0;
+                                    for(QueryDocumentSnapshot document : task.getResult()) {
+                                        Timestamp registerTS = document.getTimestamp("timestamp");
+                                        long totalEd = document.getLong("유통기한");
+
+                                        long seconds = Timestamp.now().getSeconds() - registerTS.getSeconds();
+                                        long remainED = totalEd - (seconds / (60 * 60 * 24));
+                                        if (remainED < 0) {
+                                            remainED = 0;
+                                        }
+                                        if (remainED > 100) {
+                                            remainED = 100;
+                                        }
+                                        addAllDate += remainED;
+                                        num++;
+
+                                    }
+                                    Log.d("HELLO1", " "+addAllDate+" "+num);
+
+
+                                    DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
+                                    putFieldRef.update(bigIngredientName+"갯수",num);
+                                    putFieldRef.update("남은기한합",addAllDate);
+                                }
+                            });
+                        }
+
+                    }
+                }
+
+            }
+
+        });
+    }
+
     public void showTotalFreshness(String userID){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        CollectionReference bigIngredientRef = db.collection("사용자").document(userID)
+                .collection("냉동실"); //대분류 Ref
+        bigIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                long totalED = 0;
+                long num =0;
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        if(document.exists()){
+                            totalED+=document.getLong("남은기한합");
+                            num+=document.getLong(document.getId() + "갯수");
 
-        db.collection("사용자").document(userID)
-                .collection("냉동실")
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        long addAllDate = 0;
-                        int num = 0;
-                        if(task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.exists()) {
-                                    Timestamp registerTS = document.getTimestamp("timestamp");
-                                    long totalEd = document.getLong("유통기한");
-
-                                    long seconds = Timestamp.now().getSeconds()-registerTS.getSeconds();
-                                    long remainED = totalEd-(seconds/(60*60*24));
-                                    if(remainED<0){remainED=0;}
-                                    if(remainED>100) {remainED=100;}
-                                    addAllDate+=remainED;
-                                    num++;
-                                }
-                            }
                         }
-                        ProgressBar pb = findViewById(R.id.pb_freezerTotalED);
-                        TextView freshnessTV = findViewById(R.id.tv_freezerFreshness);
-                        int totalEDProgress;
-                        if(num>0) {
-                            totalEDProgress = (int) addAllDate / num;
-                        }else{
-                            totalEDProgress=0;
-                        }
-                        if(totalEDProgress<=10){
-                            pb.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
-                        }
-
-                        if(totalEDProgress>100) {totalEDProgress=100;}
-                        pb.setProgress(totalEDProgress);
-                        freshnessTV.setText(totalEDProgress+"점");
                     }
-                });
+                    ProgressBar pb = findViewById(R.id.pb_freezerTotalED);
+                    TextView freshnessTV = findViewById(R.id.tv_freezerFreshness);
+                    int totalEDProgress;
+                    if (num > 0) {
+                        totalEDProgress = (int)(totalED / num);
+                    } else {
+                        totalEDProgress = 0;
+                    }
+                    if (totalEDProgress <= 10) {
+                        pb.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                    }
+
+                    if (totalEDProgress > 100) {
+                        totalEDProgress = 100;
+                    }
+                    pb.setProgress(totalEDProgress);
+                    freshnessTV.setText(totalEDProgress + "점");
+                }
+            }
+        });
     }
+
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
