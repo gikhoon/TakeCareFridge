@@ -50,7 +50,7 @@ public class FridgeMain extends AppCompatActivity {
 
         //RecyclerView 출력시켜주는 코드
         updateBigIngredientFreshness("asd"); //추후 userId에 회원 ID 넣어야함
-        showTotalFreshness("asd");
+
     }
 
     @Override
