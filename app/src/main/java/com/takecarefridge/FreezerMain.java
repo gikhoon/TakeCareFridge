@@ -48,9 +48,6 @@ public class FreezerMain extends AppCompatActivity {
 
         updateBigIngredientFreshness("asd"); //목록 총 데이터 업데이트
 
-
-
-
     }
 
     @Override
@@ -80,8 +77,7 @@ public class FreezerMain extends AppCompatActivity {
                                     smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            Map<String, Object> map = document.getData();
-                                            if(task.isComplete()) {
+                                            if(!task.getResult().isEmpty()) {
                                                 fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
                                             }
                                             for (QueryDocumentSnapshot document : task.getResult()) {
