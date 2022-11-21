@@ -43,8 +43,7 @@ public class FridgeMain extends AppCompatActivity {
         Intent getIntent = getIntent();
         ID = "asd";
 
-        //RecyclerView 출력시켜주는 코드
-        updateBigIngredientFreshness("asd"); //추후 userId에 회원 ID 넣어야함
+        updateBigIngredientFreshness("asd");
 
     }
 
@@ -130,7 +129,7 @@ public class FridgeMain extends AppCompatActivity {
                 }
             }
         });
-    }
+    } //Recycler뷰 출력 함수
 
     void updateBigIngredientFreshness(String userID) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -184,7 +183,7 @@ public class FridgeMain extends AppCompatActivity {
             }
 
         });
-    }
+    } //남은 유통기한 합, 전체 갯수 업데이트
 
     public void showTotalFreshness(String userID){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -224,7 +223,7 @@ public class FridgeMain extends AppCompatActivity {
                 }
             }
         });
-    }
+    } //값 totalProcess에 출력
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
