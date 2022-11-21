@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "179788250741-tr4gndop74t49fgtd87a6ltsiha001b2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.takecarefridge",
+            "certificate_hash": "029769b7e11fbaf276ce6ae4bb55705e7b689634"
+          }
+        },
+        {
           "client_id": "179788250741-jbcvkdusuvvibtmn3nbhji4eh4fin8pj.apps.googleusercontent.com",
           "client_type": 3
         }
