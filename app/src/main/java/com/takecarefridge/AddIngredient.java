@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -81,7 +82,8 @@ public class AddIngredient extends AppCompatActivity {
                             mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
 
                             mIngredientList.setAdapter(mAddIngredientListAdapter);
-                            mIngredientList.setLayoutManager(new LinearLayoutManager(AddIngredient.this));
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(AddIngredient.this, 2);
+                            mIngredientList.setLayoutManager(gridLayoutManager);
                         }
                     }
                 });
