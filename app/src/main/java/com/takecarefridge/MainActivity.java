@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DocumentReference timestampRef = db.collection("사용자")
+        /*DocumentReference timestampRef = db.collection("사용자")
                 .document("asd").collection("냉동실")
                 .document("만두");
         timestampRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("LOGGER", "get failed with ", task.getException());
                 }
             }
-        });
+        });*/
 
     }
     public void goShoppingBag(View v){

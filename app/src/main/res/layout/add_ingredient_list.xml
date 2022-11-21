@@ -13,7 +13,7 @@
         android:layout_marginStart="30dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@color/white"
+        android:background="@drawable/white_bar_right2"
         android:scaleType="fitCenter"/>
 
     <TextView
