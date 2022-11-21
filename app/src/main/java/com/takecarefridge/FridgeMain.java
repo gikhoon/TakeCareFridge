@@ -81,7 +81,7 @@ public class FridgeMain extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if(!task.getResult().isEmpty()) {
-                                        fridgeDataList.add(new FridgeData(null, document.getId(), 0, 0, 0));
+                                        fridgeDataList.add(new FridgeData(null, document.getId(),null, 0, 0, 0));
                                     }
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         //RemainED 구하기
@@ -94,8 +94,9 @@ public class FridgeMain extends AppCompatActivity {
                                         //TotalEd 구하기
                                         String imagePath = document.getString("이미지");
                                         String name = document.getString("분류");
+                                        String documentName = document.getId();
                                         //DataList에 넣기
-                                        FridgeData fd = new FridgeData(imagePath, name, totalEd, remainED, 1);
+                                        FridgeData fd = new FridgeData(imagePath, name, documentName, totalEd, remainED, 1);
                                         fridgeDataList.add(fd);
                                     }
 
@@ -106,7 +107,7 @@ public class FridgeMain extends AppCompatActivity {
                                     mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View v, FridgeData data) {
-                                            PopupMenu popup = new PopupMenu(getApplicationContext(),v);
+                                            Log.d("HELLO6", data.name);
 
                                         }
                                     });
