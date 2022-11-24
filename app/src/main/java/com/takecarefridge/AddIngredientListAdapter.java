@@ -34,10 +34,19 @@ class IngredientData{
 }
 
 public class AddIngredientListAdapter extends RecyclerView.Adapter<AddIngredientListAdapter.AddIngredientViewHolder> {
+    private static AddIngredientListAdapter.OnItemClickListener mListener = null;
+
     static ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
 
     public AddIngredientListAdapter(ArrayList<IngredientData> ingredientDataList){
         this.ingredientDataList = ingredientDataList;
+    }
+    public void setOnItemClickListener(AddIngredientListAdapter.OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(View v, IngredientData data);
     }
 
     @NonNull
@@ -59,6 +68,7 @@ public class AddIngredientListAdapter extends RecyclerView.Adapter<AddIngredient
         StorageReference submitPng = storageRef.child(item.imagePath);
 
         Glide.with(holder.image.getContext()).load(submitPng).into(holder.image);
+
     }
 
 
@@ -75,6 +85,18 @@ public class AddIngredientListAdapter extends RecyclerView.Adapter<AddIngredient
             super(itemView);
             image = itemView.findViewById(R.id.iv_addingredientImage);
             name = itemView.findViewById(R.id.tv_addingredientName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(view, ingredientDataList.get(position));
+                        }
+                    }
+                }
+            });
         }
     }
 }

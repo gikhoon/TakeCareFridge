@@ -3,6 +3,7 @@ package com.takecarefridge;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,10 +81,17 @@ public class AddIngredient extends AppCompatActivity {
 
                             mIngredientList = findViewById(R.id.rv_addIngredientListRecyclerView);
                             mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
-
                             mIngredientList.setAdapter(mAddIngredientListAdapter);
                             GridLayoutManager gridLayoutManager = new GridLayoutManager(AddIngredient.this, 2);
                             mIngredientList.setLayoutManager(gridLayoutManager);
+                            mAddIngredientListAdapter.setOnItemClickListener(new AddIngredientListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, IngredientData data) {
+                                    Intent intent = new Intent(AddIngredient.this, AddIngredientDetail.class);
+                                    intent.putExtra("largeClass", data.name);
+                                    startActivity(intent);
+                                }
+                            });
                         }
                     }
                 });
