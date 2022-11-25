@@ -31,6 +31,7 @@ import java.util.ArrayList;
 public class FreezerMain extends AppCompatActivity implements View.OnClickListener{
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         actionBar.hide();
 
         Intent getIntent = getIntent();
+        ID = "asd";
 
         updateBigIngredientFreshness("asd"); //목록 총 데이터 업데이트
 
@@ -52,8 +54,8 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-        showTotalFreshness("asd");//전체 게이지 출력 메소드
-        showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+        showTotalFreshness(ID);//전체 게이지 출력 메소드
+        showFreezerScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
     }
 
     public void showFreezerScreen(String userID){

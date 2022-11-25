@@ -3,18 +3,72 @@ package com.takecarefridge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class AddIngredientDetail extends AppCompatActivity {
+
+    RecyclerView mIngredientList;
+    AddIngredientDetailListAdapter mAddIngredientDetailListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_ingredient_detail);
 
-        Intent intent = getIntent();
-        String largeClass = intent.getStringExtra("largeClass");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        Intent preIntent = getIntent(); //largeClass에 대분류 값 preActivity에 시작된 장소(freezer, fridge)
+        String largeClass = preIntent.getStringExtra("largeClass");
         String id = "asd";
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        ArrayList<IngredientDetailData> ingredientDetailDataList = new ArrayList<>();
+
+        db.collection("재료").document(largeClass).collection(largeClass)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                if(document.exists()){
+                                    String name = document.getId();
+                                    String imagePath = document.getString("이미지");
+
+                                    IngredientDetailData fd = new IngredientDetailData(name, imagePath);
+
+                                    ingredientDetailDataList.add(fd);
+                                }
+                            }
+                            mIngredientList = findViewById(R.id.rv_addIngredientDetailListRecyclerView);
+                            mAddIngredientDetailListAdapter = new AddIngredientDetailListAdapter(ingredientDetailDataList);
+                            mIngredientList.setAdapter(mAddIngredientDetailListAdapter);
+                            GridLayoutManager gridLayoutManager = new GridLayoutManager(AddIngredientDetail.this, 2);
+                            mIngredientList.setLayoutManager(gridLayoutManager);
+                            mAddIngredientDetailListAdapter.setOnClickListener(new AddIngredientDetailListAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View v, IngredientDetailData data) {
+                                    Log.d("HELLO6", data.name);
+                                }
+                            });
+
+                        }
+                    }
+                });
     }
 }

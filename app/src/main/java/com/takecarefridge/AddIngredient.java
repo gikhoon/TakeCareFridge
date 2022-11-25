@@ -88,6 +88,7 @@ public class AddIngredient extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(View v, IngredientData data) {
                                     Intent intent = new Intent(AddIngredient.this, AddIngredientDetail.class);
+                                    intent.putExtra("preActivity", before);
                                     intent.putExtra("largeClass", data.name);
                                     startActivity(intent);
                                 }

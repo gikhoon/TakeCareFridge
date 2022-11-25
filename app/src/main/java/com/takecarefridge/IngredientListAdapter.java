@@ -35,7 +35,7 @@ class FridgeData implements Comparable<FridgeData>{
     long remainED; //남은 유통기한
     int viewType; //Menu인지 BODY인지
 
-    public FridgeData(String imagePath,String name,String documentName,long totalED, long remainED, int viewType){
+    public FridgeData(String imagePath ,String name,String documentName,long totalED, long remainED, int viewType){
         this.imagePath = imagePath;
         this.name= name;
         this.documentName = documentName;
@@ -93,14 +93,12 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewholder, int position) {
         if(viewholder instanceof IngredientBodyViewHolder){
-            Log.d("CREATE", "BODY2");
             IngredientBodyViewHolder holder = ((IngredientBodyViewHolder) viewholder);
             FridgeData item = fridgeDataList.get(position);
 
             FirebaseStorage storage = FirebaseStorage.getInstance();
             StorageReference storageRef = storage.getReference();
             StorageReference pathReference = storageRef.child(item.imagePath);
-
 
             Glide.with(holder.image.getContext()).load(pathReference).into(holder.image);
             holder.name.setText(item.name);
