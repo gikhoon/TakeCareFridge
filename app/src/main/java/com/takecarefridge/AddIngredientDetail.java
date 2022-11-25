@@ -66,6 +66,8 @@ public class AddIngredientDetail extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(View v, IngredientDetailData data) {
                                     Log.d("HELLO6", data.name);
+
+                                    //largeClass, preActivity, ID 필요
                                 }
                             });
 
