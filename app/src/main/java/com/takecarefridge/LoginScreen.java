@@ -59,11 +59,17 @@ public class LoginScreen extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
 
-
         editTextEmail = (EditText)findViewById(R.id.loginId);
         editTextpassword = (EditText)findViewById(R.id.loginPassword);
         signInButton = findViewById(R.id.login_button);
         mLoginBtn = findViewById(R.id.loginButton);
+
+        //로그인을 하였는데 홈화면에서 로그인 화면으로 돌아갈 떄
+        if(firebaseAuth.getCurrentUser() != null){
+            Toast.makeText(LoginScreen.this, "환연합니다", Toast.LENGTH_SHORT).show();
+            Intent intent= new Intent(getApplicationContext(), MainActivity.class); //getApplicationContext(): 어플리케이션의 life cycle
+            startActivity(intent);
+        }
 
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +100,7 @@ public class LoginScreen extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        // [END config_signin]ㅑ
+        // [END config_signin]
 
         // [START initialize_auth]
         // Initialize Firebase Auth
@@ -117,7 +123,7 @@ public class LoginScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        //아래 주석처리 부분들은 구글 로그인을 사용할 시에 필요한 코드들이다.
         /*editTextEmail = (EditText)findViewById(R.id.loginId);
         editTextpassword = (EditText)findViewById(R.id.loginPassword);
         Button emailLogin = (Button) findViewById(R.id.loginButton);
@@ -225,7 +231,7 @@ public class LoginScreen extends AppCompatActivity {
     private void signOut() {
         // Firebase sign out
         mAuth.signOut();
-
+        Toast.makeText(this,"로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
         // Google sign out
         mGoogleSignInClient.signOut().addOnCompleteListener(this,
                 new OnCompleteListener<Void>() {
@@ -236,17 +242,9 @@ public class LoginScreen extends AppCompatActivity {
                 });
     }
 
-    private void revokeAccess() {
-        // Firebase sign out
-        mAuth.signOut();
 
-        // Google revoke access
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getApplicationContext(), "Complete", Toast.LENGTH_LONG).show();
-                    }
-                });
+    // 회원탈퇴
+    private void revokeAccess() {
+        mAuth.getCurrentUser().delete();
     }
 }

@@ -80,7 +80,8 @@ public class Signup extends AppCompatActivity {
 
                                 if (!flag) {
                                     Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                                    mregisterBtn.setEnabled(true);
+                                    /*mregisterBtn.setEnabled(true);*/
+
                                 }
                             }
                         });
@@ -101,7 +102,7 @@ public class Signup extends AppCompatActivity {
                    mDialog.show();
 
                    firebaseAuth.createUserWithEmailAndPassword(email,pwd)
-                           .addOnCompleteListener(Signup.this,
+                            .addOnCompleteListener(Signup.this,
                                    new OnCompleteListener<AuthResult>(){
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task){
@@ -239,6 +240,7 @@ public class Signup extends AppCompatActivity {
                                                 Toast.makeText(Signup.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                             }
                                             else{
+                                                mSigEmail.setText(null);
                                                 Toast.makeText(Signup.this, "이미 존재하는 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
                                                 return;
                                             }
@@ -247,6 +249,8 @@ public class Signup extends AppCompatActivity {
 
                }
                else{ //비밀번호가 일치하지 않을 때
+                   mSigpassword.setText(null);
+                   mSigpasswordCheck.setText(null);
                    Toast.makeText(Signup.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                    return;
                }
@@ -254,7 +258,6 @@ public class Signup extends AppCompatActivity {
             }
         });
     }
-    public void goToLogin(View view){
-        startActivity(new Intent(this, LoginScreen.class));
-    }
+
+    public void goToLogin(View view){startActivity(new Intent(this, LoginScreen.class));}
 }
