@@ -23,6 +23,7 @@ public class AddIngredientDetail extends AppCompatActivity {
 
     RecyclerView mIngredientList;
     AddIngredientDetailListAdapter mAddIngredientDetailListAdapter;
+    String before;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class AddIngredientDetail extends AppCompatActivity {
 
         Intent preIntent = getIntent(); //largeClass에 대분류 값 preActivity에 시작된 장소(freezer, fridge)
         String largeClass = preIntent.getStringExtra("largeClass");
+        before = preIntent.getStringExtra("preActivity");
         String id = "asd";
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -70,5 +72,11 @@ public class AddIngredientDetail extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void goBeforeActivity(View v) {
+        Intent intent = new Intent(this ,AddIngredient.class);
+        intent.putExtra("preActivity", before);
+        startActivity(intent);
     }
 }
