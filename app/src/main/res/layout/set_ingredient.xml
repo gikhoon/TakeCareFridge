@@ -84,7 +84,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:hint="이름을 입력해주세요"
-                android:enabled="false" />
+                android:enabled="false"
+                android:inputType="text"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -144,7 +145,8 @@
             android:layout_below="@+id/rl_3"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
-            android:text="추가"/>
+            android:text="추가"
+            android:onClick="saveIngredient"/>
     </RelativeLayout>
 
 </LinearLayout>

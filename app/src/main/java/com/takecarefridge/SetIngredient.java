@@ -49,6 +49,24 @@ public class SetIngredient extends AppCompatActivity {
 
         setSetIngredient();
     }
+
+    //DatePicker onClickListener
+    DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int yy, int mm, int dd) {
+            TextView tv_date = findViewById(R.id.tv_settingDate);
+            tv_date.setText(String.format("%d-%d-%d", yy,mm+1,dd));
+            Calendar dDay = Calendar.getInstance();
+            dDay.set(yy, mm, dd);
+            long dDayTime = dDay.getTimeInMillis();
+            long todayTime = Calendar.getInstance().getTimeInMillis();
+            leftDate = (dDayTime - todayTime) / (60 * 60 * 24 * 1000);
+
+            //유통기한 일수 계산
+        }
+    };
+
+    //기본 화면 출력
     public void setSetIngredient(){
         ImageView iv = findViewById(R.id.iv_settingIngredientImage);
         TextView tv_largeClass = findViewById(R.id.tv_settingIngredientLargeClass);
@@ -80,21 +98,8 @@ public class SetIngredient extends AppCompatActivity {
             Glide.with(iv.getContext()).load(smallStorageRef).into(iv);
         }
     }
-    DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker datePicker, int yy, int mm, int dd) {
-            TextView tv_date = findViewById(R.id.tv_settingDate);
-            tv_date.setText(String.format("%d-%d-%d", yy,mm+1,dd));
-            Calendar dDay = Calendar.getInstance();
-            dDay.set(yy, mm, dd);
-            long dDayTime = dDay.getTimeInMillis();
-            long todayTime = Calendar.getInstance().getTimeInMillis();
-            leftDate = (dDayTime - todayTime) / (60 * 60 * 24 * 1000);
 
-            //유통기한 일수 계산
-        }
-    };
-
+    //날짜 누르면 수정되는 메소드
     public void goDatePicker(View v){
         Calendar cal = Calendar.getInstance();
         DatePickerDialog d = new DatePickerDialog(this, mDateSetListener,cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
@@ -102,6 +107,9 @@ public class SetIngredient extends AppCompatActivity {
         d.show();
     }
 
+    public void saveIngredient(View v){
+
+    }
 
     public void goBeforeActivity(View v) {
         Intent intent = new Intent(this ,AddIngredientDetail.class);
