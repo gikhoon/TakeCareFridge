@@ -126,12 +126,16 @@
                 android:textSize="20sp"
                 android:text="유통 기한"/>
 
-            <Button
+            <TextView
+                android:id="@+id/tv_settingDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="날짜 선택"
-                android:layout_toRightOf="@+id/tv_settingtv2"
-                android:layout_marginStart="200dp"/>
+                android:text="유통기한 날짜를 선택"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_toRightOf="@id/tv_settingtv2"
+                android:layout_marginStart="70dp"
+                android:onClick="goDatePicker"/>
         </RelativeLayout>
 
         <Button
