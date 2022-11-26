@@ -53,12 +53,12 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-        showFreezerScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+        showFridgeScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
         showTotalFreshness(ID);//전체 게이지 출력 메소드
 
     }
 
-    public void showFreezerScreen(String userID){
+    public void showFridgeScreen(String userID){
         ArrayList<FridgeData> fridgeDataList = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();;
 
@@ -78,8 +78,8 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                             smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if(!task.getResult().isEmpty()) {
-                                        fridgeDataList.add(new FridgeData(null, document.getId(),null, 0, 0, 0));
+                                    if (!task.getResult().isEmpty()) {
+                                        fridgeDataList.add(new FridgeData(null, document.getId(), null, 0, 0, 0));
                                     }
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         //RemainED 구하기
@@ -98,7 +98,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                         fridgeDataList.add(fd);
                                     }
 
-                                    mFridgeList = findViewById(R.id.rv_freezerListRecyclerView);
+                                    mFridgeList = findViewById(R.id.rv_fridgeListRecyclerView);
 
                                     //setAdapter
                                     mIngredientListAdapter = new IngredientListAdapter(fridgeDataList);
@@ -109,6 +109,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
 
                                         }
                                     });
+                                    mFridgeList.setAdapter(mIngredientListAdapter);
 
                                     //set
                                     GridLayoutManager gridLayoutManager = new GridLayoutManager(FridgeMain.this, 3);
@@ -131,7 +132,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                 }
             }
         });
-    } //Recycler뷰 출력 함수
+    }//Recycler뷰 출력 함수
 
     void updateBigIngredientFreshness(String userID) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -200,7 +201,6 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                 long totalED = 0;
                 long num =0;
                 if(task.isSuccessful()){
-                    Log.d("HELLO5", "second");
                     for(QueryDocumentSnapshot document : task.getResult()){
                         if(document.exists()){
                             totalED+=document.getLong("남은기한합");
