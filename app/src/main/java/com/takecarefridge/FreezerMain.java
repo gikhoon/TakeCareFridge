@@ -172,9 +172,9 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
 
                                     }
 
-
                                     DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
-                                    putFieldRef.update(bigIngredientName+"갯수",num);
+                                    String s = bigIngredientName + "갯수";
+                                    putFieldRef.update(s,num);
                                     putFieldRef.update("남은기한합",addAllDate);
                                 }
                             });
@@ -237,6 +237,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         Intent intent = new Intent(FreezerMain.this, AddIngredient.class);
         intent.putExtra("preActivity", "Freezer");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }

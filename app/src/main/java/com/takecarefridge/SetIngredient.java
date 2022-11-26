@@ -1,5 +1,6 @@
 package com.takecarefridge;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,15 +13,25 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SetIngredient extends AppCompatActivity {
     String before;
@@ -108,6 +119,95 @@ public class SetIngredient extends AppCompatActivity {
     }
 
     public void saveIngredient(View v){
+        String saveIngredientPlace;
+        EditText et = findViewById(R.id.et_settingIngredientName);
+        String ingredientName = et.getText().toString();
+        Log.d("HELLO5", ingredientName);
+
+        if(isSelfAdd){
+            if(ingredientName.equals("")) {
+                Toast.makeText(getApplicationContext(), "이름이 없습니다 이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        if(before.equals("Freezer")){saveIngredientPlace = "냉동실";}
+        else if(before.equals("Fridge")){saveIngredientPlace = "냉장실";}
+        else{saveIngredientPlace = "장바구니";}
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference largeClassRef = db.collection("사용자").document(ID).collection(saveIngredientPlace).document(largeClass);
+        largeClassRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                long ingredientSum =1;
+                if(task.isSuccessful()) {
+                    DocumentSnapshot s = task.getResult();
+
+                    //대분류 갯수 업데이트
+                    if (s.getLong(largeClass+"갯수") == null) {
+                        Log.d("HELLO6", largeClass + "갯수"+"   1");
+                        largeClassRef.update(largeClass + "갯수", 1);
+                    }else{
+                        String str = largeClass + "갯수";
+                        long num = s.getLong(str);
+                        num++;
+                        Log.d("HELLO6", str+"    "+num);
+                        largeClassRef.update(largeClass + "갯수", num);
+                    }
+
+                    //남은유통기한 없데이트
+                    long d = s.getLong("남은기한합");
+                    if(d>100){d=100;}
+                    d += leftDate;
+                    Log.d("HELLO6", "남은기한합    " + d);
+                    largeClassRef.update("남은기한합", d);
+
+                    //smallClass 가지고 있는 갯수 업데이트
+                    if(s.getLong(smallClass)==null) {
+                        ingredientSum=1;
+                        Log.d("HELLO6", ingredientName +"   1");
+                        largeClassRef.update(ingredientName,1);
+                    }else{
+                        long ingredientNum = s.getLong(smallClass);
+                        ingredientNum++;
+                        ingredientSum = ingredientNum;
+                        Log.d("HELLO6", smallClass+ "    "+ingredientNum);
+                        largeClassRef.update(smallClass, ingredientNum);
+                    }
+                }
+                DocumentReference smallClassRef;
+                if(isSelfAdd){
+                    smallClassRef = largeClassRef.collection(largeClass).document(ingredientName+ingredientSum);
+                }else{
+                    smallClassRef = largeClassRef.collection(largeClass).document(smallClass+ingredientSum);
+                }
+                Map<String, Object> m = new HashMap<>();
+                m.put("timestamp", Timestamp.now());
+
+                if(isSelfAdd){
+                    m.put("분류", ingredientName);
+                    String str = "재료/" + largeClass+".png";
+                    m.put("이미지",str);
+                }else {
+                    m.put("분류", smallClass);
+                    String str = "재료/" + largeClass + "/" + smallClass + ".png";
+                    m.put("이미지",str);
+                }
+                m.put("유통기한", leftDate);
+                smallClassRef.set(m);
+
+                Intent intent = new Intent(SetIngredient.this,ShoppingBag.class);
+                if(before.equals("Freezer")) {
+                    intent = new Intent(SetIngredient.this,FreezerMain.class);
+                }else if(before.equals("Fridge")){
+                    intent = new Intent(SetIngredient.this, FridgeMain.class);
+                }
+                intent.putExtra("ID", ID);
+                startActivity(intent);
+
+            }
+        });
+
+
 
     }
 
