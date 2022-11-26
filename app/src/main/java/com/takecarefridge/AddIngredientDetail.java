@@ -23,7 +23,9 @@ public class AddIngredientDetail extends AppCompatActivity {
 
     RecyclerView mIngredientList;
     AddIngredientDetailListAdapter mAddIngredientDetailListAdapter;
+    String largeClass;
     String before;
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,9 @@ public class AddIngredientDetail extends AppCompatActivity {
         actionBar.hide();
 
         Intent preIntent = getIntent(); //largeClass에 대분류 값 preActivity에 시작된 장소(freezer, fridge)
-        String largeClass = preIntent.getStringExtra("largeClass");
+        largeClass = preIntent.getStringExtra("largeClass");
         before = preIntent.getStringExtra("preActivity");
-        String id = "asd";
+        ID = "asd";
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -65,8 +67,13 @@ public class AddIngredientDetail extends AppCompatActivity {
                             mAddIngredientDetailListAdapter.setOnClickListener(new AddIngredientDetailListAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View v, IngredientDetailData data) {
-                                    Log.d("HELLO6", data.name);
-
+                                    Intent intent = new Intent(AddIngredientDetail.this, SetIngredient.class);
+                                    intent.putExtra("preActivity",before);
+                                    intent.putExtra("largeClass", largeClass);
+                                    intent.putExtra("smallClass", data.name);
+                                    intent.putExtra("ID", ID);
+                                    intent.putExtra("addSelf", false);
+                                    startActivity(intent);
                                     //largeClass, preActivity, ID 필요
                                 }
                             });
@@ -79,6 +86,17 @@ public class AddIngredientDetail extends AppCompatActivity {
     public void goBeforeActivity(View v) {
         Intent intent = new Intent(this ,AddIngredient.class);
         intent.putExtra("preActivity", before);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
+    }
+
+    public void goAddSelfActivity(View v) {
+        Intent intent = new Intent(this, SetIngredient.class);
+        intent.putExtra("preActivity", before);
+        intent.putExtra("largeClass", largeClass);
+        intent.putExtra("smallClass", "null");
+        intent.putExtra("ID", ID);
+        intent.putExtra("addSelf", true);
         startActivity(intent);
     }
 }

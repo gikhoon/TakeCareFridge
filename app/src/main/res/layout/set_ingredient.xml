@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 android:text="대분류"
                 android:layout_toRightOf="@+id/iv_settingIngredientImage"/>
 
@@ -81,10 +81,10 @@
                 android:textSize="20sp"
                 android:layout_below="@+id/tv_settingIngredientLargeClass"
                 android:layout_toRightOf="@+id/iv_settingIngredientImage"
-
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:hint="이름을 입력해주세요"/>
+                android:hint="이름을 입력해주세요"
+                android:enabled="false" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -140,7 +140,7 @@
             android:layout_below="@+id/rl_3"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
-            android:text="넣기"/>
+            android:text="추가"/>
     </RelativeLayout>
 
 </LinearLayout>

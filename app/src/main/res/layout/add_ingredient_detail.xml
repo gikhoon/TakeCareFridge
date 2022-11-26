@@ -44,11 +44,11 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/bt_makeIngredientSelfButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="직접 추가"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:onClick="goAddSelfActivity"/>
     </RelativeLayout>
 
     <RelativeLayout
