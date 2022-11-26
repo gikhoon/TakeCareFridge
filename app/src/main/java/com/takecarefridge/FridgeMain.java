@@ -5,8 +5,11 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -105,7 +108,23 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                     mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View v, FridgeData data) {
-                                            Log.d("HELLO6", data.name);
+                                            PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+                                            MenuInflater inflater = popup.getMenuInflater();
+                                            inflater.inflate(R.menu.menu_main, popup.getMenu());
+                                            popup.show();
+                                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                @Override
+                                                public boolean onMenuItemClick(MenuItem item) {
+                                                    switch (item.getItemId()){
+                                                        case R.id.menu_delete:
+                                                            return true;
+                                                        case R.id.menu_searchRecipe:
+                                                            return true;
+                                                        default:
+                                                            return false;
+                                                    }
+                                                }
+                                            });
 
                                         }
                                     });
