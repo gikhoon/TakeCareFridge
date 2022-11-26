@@ -43,6 +43,10 @@
             android:layout_centerHorizontal="true"
             android:text="신선도"
             android:layout_below="@id/pb_fridgeTotalED"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showTotalFreshness"/>
 
     </RelativeLayout>
     <RelativeLayout
@@ -62,6 +66,7 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/fridge_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

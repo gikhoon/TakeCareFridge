@@ -47,7 +47,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         Intent getIntent = getIntent();
         ID = "asd";
 
-        updateBigIngredientFreshness("asd"); //목록 총 데이터 업데이트
+        updateBigIngredientFreshness(ID); //목록 총 데이터 업데이트
 
     }
 

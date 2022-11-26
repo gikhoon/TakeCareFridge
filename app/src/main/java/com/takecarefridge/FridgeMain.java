@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class FridgeMain extends AppCompatActivity {
+public class FridgeMain extends AppCompatActivity implements View.OnClickListener{
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
     String ID;
@@ -36,6 +37,9 @@ public class FridgeMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fridge_main);
 
+        Button FreezerPlusBtn = findViewById(R.id.fridge_plus);
+        FreezerPlusBtn.setOnClickListener(this);
+
         //맨위에 액션바 없애주는 코드
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -43,14 +47,15 @@ public class FridgeMain extends AppCompatActivity {
         Intent getIntent = getIntent();
         ID = "asd";
 
-        updateBigIngredientFreshness("asd");
+        updateBigIngredientFreshness(ID);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showTotalFreshness(ID);//전체 게이지 출력 메소드
         showFreezerScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+        showTotalFreshness(ID);//전체 게이지 출력 메소드
+
     }
 
     public void showFreezerScreen(String userID){
@@ -104,22 +109,20 @@ public class FridgeMain extends AppCompatActivity {
 
                                         }
                                     });
-                                    mFridgeList.setAdapter(mIngredientListAdapter);
 
                                     //set
                                     GridLayoutManager gridLayoutManager = new GridLayoutManager(FridgeMain.this, 3);
-                                    gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+                                    gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                                         @Override
                                         public int getSpanSize(int position) {
-                                            if(mFridgeList.getAdapter().getItemViewType(position)==0){
+                                            if (mFridgeList.getAdapter().getItemViewType(position) == 0) {
                                                 return 3;
-                                            }else{
+                                            } else {
                                                 return 1;
                                             }
                                         }
                                     });
                                     mFridgeList.setLayoutManager(gridLayoutManager);
-
                                 }
                             });
                         }
@@ -143,7 +146,7 @@ public class FridgeMain extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document.exists()) {
                             String bigIngredientName = document.getId();
-
+                            Log.d("HELLO5", bigIngredientName);
                             CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
                                     .collection(bigIngredientName);
                             smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -172,6 +175,8 @@ public class FridgeMain extends AppCompatActivity {
                                     DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
                                     putFieldRef.update(bigIngredientName+"갯수",num);
                                     putFieldRef.update("남은기한합",addAllDate);
+
+                                    Log.d("HELLO5", addAllDate+" ");
                                 }
                             });
                         }
@@ -195,6 +200,7 @@ public class FridgeMain extends AppCompatActivity {
                 long totalED = 0;
                 long num =0;
                 if(task.isSuccessful()){
+                    Log.d("HELLO5", "second");
                     for(QueryDocumentSnapshot document : task.getResult()){
                         if(document.exists()){
                             totalED+=document.getLong("남은기한합");
@@ -202,8 +208,8 @@ public class FridgeMain extends AppCompatActivity {
 
                         }
                     }
-                    ProgressBar pb = findViewById(R.id.pb_freezerTotalED);
-                    TextView freshnessTV = findViewById(R.id.tv_freezerFreshness);
+                    ProgressBar pb = findViewById(R.id.pb_fridgeTotalED);
+                    TextView freshnessTV = findViewById(R.id.tv_fridgeFreshness);
                     int totalEDProgress;
                     if (num > 0) {
                         totalEDProgress = (int)(totalED / num);
@@ -226,5 +232,12 @@ public class FridgeMain extends AppCompatActivity {
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void onClick(View view){
+        Intent intent = new Intent(FridgeMain.this, AddIngredient.class);
+        intent.putExtra("preActivity", "Fridge");
+        startActivity(intent);
     }
 }
