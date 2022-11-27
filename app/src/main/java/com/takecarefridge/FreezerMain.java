@@ -48,7 +48,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         actionBar.hide();
 
         Intent getIntent = getIntent();
-        ID = "asd";
+        ID = "lim";
 
         updateBigIngredientFreshness(ID); //목록 총 데이터 업데이트
 
@@ -257,6 +257,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         Intent intent = new Intent(FreezerMain.this, AddIngredient.class);
         intent.putExtra("preActivity", "Freezer");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("ID", ID);
         startActivity(intent);
     }
 }

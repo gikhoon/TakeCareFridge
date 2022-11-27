@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,6 +60,14 @@ public class SetIngredient extends AppCompatActivity {
         Log.d("HELLO6", before + " " + largeClass + " " + smallClass+" "+ID);
 
         setSetIngredient();
+
+        Button b = findViewById(R.id.bt_addIngredientInDB);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveIngredient(view);
+            }
+        });
     }
 
     //DatePicker onClickListener
@@ -134,6 +143,7 @@ public class SetIngredient extends AppCompatActivity {
         else if(before.equals("Fridge")){saveIngredientPlace = "냉장실";}
         else{saveIngredientPlace = "장바구니";}
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Log.d("Hello6", "사용자/"+ID+"/"+saveIngredientPlace+"/"+largeClass);
         DocumentReference largeClassRef = db.collection("사용자").document(ID).collection(saveIngredientPlace).document(largeClass);
         largeClassRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

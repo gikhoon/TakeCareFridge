@@ -48,7 +48,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
         actionBar.hide();
 
         Intent getIntent = getIntent();
-        ID = "asd";
+        ID = "lim";
 
         updateBigIngredientFreshness(ID);
     }
@@ -257,6 +257,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view){
         Intent intent = new Intent(FridgeMain.this, AddIngredient.class);
         intent.putExtra("preActivity", "Fridge");
+        intent.putExtra("ID", ID);
         startActivity(intent);
     }
 }

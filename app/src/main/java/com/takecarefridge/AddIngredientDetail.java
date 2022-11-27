@@ -38,7 +38,7 @@ public class AddIngredientDetail extends AppCompatActivity {
         Intent preIntent = getIntent(); //largeClass에 대분류 값 preActivity에 시작된 장소(freezer, fridge)
         largeClass = preIntent.getStringExtra("largeClass");
         before = preIntent.getStringExtra("preActivity");
-        ID = "asd";
+        ID = preIntent.getStringExtra("ID");
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

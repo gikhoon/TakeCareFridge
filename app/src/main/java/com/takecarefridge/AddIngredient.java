@@ -32,6 +32,7 @@ import java.util.ArrayList;
 
 public class AddIngredient extends AppCompatActivity {
     String before;
+    String ID;
 
     RecyclerView mIngredientList;
     AddIngredientListAdapter mAddIngredientListAdapter;
@@ -41,6 +42,7 @@ public class AddIngredient extends AppCompatActivity {
 
         Intent intent = getIntent();
         before = intent.getExtras().getString("preActivity");
+        ID = intent.getStringExtra("ID");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_ingredient);
@@ -90,6 +92,7 @@ public class AddIngredient extends AppCompatActivity {
                                     Intent intent = new Intent(AddIngredient.this, AddIngredientDetail.class);
                                     intent.putExtra("preActivity", before);
                                     intent.putExtra("largeClass", data.name);
+                                    intent.putExtra("ID", ID);
                                     startActivity(intent);
                                 }
                             });
@@ -125,7 +128,15 @@ public class AddIngredient extends AppCompatActivity {
         }*/
 
     public void goBeforeActivity(View v) {
-        if (before.equals("Freezer")) startActivity(new Intent(this, FreezerMain.class));
-        else if (before.equals("Fridge")) startActivity(new Intent(this, FridgeMain.class));
+        if (before.equals("Freezer")){
+            Intent intent = new Intent(this, FreezerMain.class);
+            intent.putExtra("ID", ID);
+            startActivity(intent);
+        }
+        else if (before.equals("Fridge")){
+            Intent intent = new Intent(this, FridgeMain.class);
+            intent.putExtra("ID", ID);
+            startActivity(intent);
+        }
     }
 }
