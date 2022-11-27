@@ -48,7 +48,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
         actionBar.hide();
 
         Intent getIntent = getIntent();
-        ID = "lim";
+        ID = getIntent.getStringExtra("ID");
 
         updateBigIngredientFreshness(ID);
     }
@@ -82,7 +82,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (!task.getResult().isEmpty()) {
-                                        fridgeDataList.add(new FridgeData(null, document.getId(), null, 0, 0, 0));
+                                        fridgeDataList.add(new FridgeData(null, null ,document.getId(), null, 0, 0, 0));
                                     }
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         //RemainED 구하기
@@ -95,9 +95,10 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                         //TotalEd 구하기
                                         String imagePath = document.getString("이미지");
                                         String name = document.getString("분류");
+                                        String largeClass = document.getString("대분류");
                                         String documentName = document.getId();
                                         //DataList에 넣기
-                                        FridgeData fd = new FridgeData(imagePath, name, documentName, totalEd, remainED, 1);
+                                        FridgeData fd = new FridgeData(imagePath, largeClass, name, documentName, totalEd, remainED, 1);
                                         fridgeDataList.add(fd);
                                     }
 

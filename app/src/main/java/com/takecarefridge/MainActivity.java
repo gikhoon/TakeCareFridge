@@ -21,29 +21,41 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 public class MainActivity extends AppCompatActivity {
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent preIntent = getIntent();
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        ID = "lim";
+        //ID = getIntent.getStringExtra("ID");
 
     }
     public void goShoppingBag(View v){
-        startActivity(new Intent(this, ShoppingBag.class));
+        Intent intent = new Intent(this, ShoppingBag.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goRecipeMain(View v){
-        startActivity(new Intent(this, RecipeMain.class));
+        Intent intent = new Intent(this, RecipeMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goFreezeMain(View v){
-        startActivity(new Intent(this, FreezerMain.class));
+        Intent intent = new Intent(this, FreezerMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goFridgeMain(View v){
-        startActivity(new Intent(this, FridgeMain.class));
+        Intent intent = new Intent(this, FridgeMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 }

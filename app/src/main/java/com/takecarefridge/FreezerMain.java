@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -30,7 +32,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-
 public class FreezerMain extends AppCompatActivity implements View.OnClickListener{
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
@@ -48,7 +49,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         actionBar.hide();
 
         Intent getIntent = getIntent();
-        ID = "lim";
+        ID = getIntent.getStringExtra("ID");
 
         updateBigIngredientFreshness(ID); //목록 총 데이터 업데이트
 
@@ -82,7 +83,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if(!task.getResult().isEmpty()) {
-                                                fridgeDataList.add(new FridgeData(null, document.getId(),null, 0, 0, 0));
+                                                fridgeDataList.add(new FridgeData(null, null, document.getId(),null, 0, 0, 0));
                                             }
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 //RemainED 구하기
@@ -95,9 +96,10 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                                 //TotalEd 구하기
                                                 String imagePath = document.getString("이미지");
                                                 String name = document.getString("분류");
+                                                String largeClass = document.getString("대분류");
                                                 String documentName = document.getId();
                                                 //DataList에 넣기
-                                                FridgeData fd = new FridgeData(imagePath, name, documentName, totalEd, remainED, 1);
+                                                FridgeData fd = new FridgeData(imagePath, largeClass, name, documentName, totalEd, remainED, 1);
                                                 fridgeDataList.add(fd);
                                             }
 
@@ -117,6 +119,19 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                                         public boolean onMenuItemClick(MenuItem item) {
                                                             switch (item.getItemId()){
                                                                 case R.id.menu_delete:
+                                                                    DocumentReference dr = db.collection("사용자").document(ID).collection("냉동실")
+                                                                            .document(data.largeClass).collection(data.largeClass).document(data.documentName);
+                                                                    dr.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if(task.isSuccessful()) {
+                                                                                Toast.makeText(getApplicationContext(), data.name + "이 삭제됐습니다", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                    Intent intent = new Intent(FreezerMain.this, FreezerMain.class);
+                                                                    intent.putExtra("ID", ID);
+                                                                    startActivity(intent);
                                                                     return true;
                                                                 case R.id.menu_searchRecipe:
                                                                     return true;

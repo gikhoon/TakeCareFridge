@@ -203,6 +203,7 @@ public class SetIngredient extends AppCompatActivity {
                     m.put("이미지",str);
                 }
                 m.put("유통기한", leftDate);
+                m.put("대분류", largeClass);
                 smallClassRef.set(m);
 
                 Intent intent = new Intent(SetIngredient.this,ShoppingBag.class);

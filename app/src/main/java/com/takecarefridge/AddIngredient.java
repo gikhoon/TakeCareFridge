@@ -50,17 +50,6 @@ public class AddIngredient extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        /*ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
-        IngredientData data = new IngredientData("육류","재료/육류.png");
-
-        ingredientDataList.add(data);
-
-        mIngredientList = findViewById(R.id.rv_addIngredientListRecyclerView);
-        mAddIngredientListAdapter = new AddIngredientListAdapter(ingredientDataList);
-
-        mIngredientList.setAdapter(mAddIngredientListAdapter);
-        mIngredientList.setLayoutManager(new LinearLayoutManager(this));*/
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         ArrayList<IngredientData> ingredientDataList = new ArrayList<>();
@@ -102,30 +91,6 @@ public class AddIngredient extends AppCompatActivity {
 
     }
 
-        //TextView tv = new TextView(this);
-        //tv.setText(before);
-
-        /*ImageView iv1 = findViewById(R.id.imageview1);
-        TextView tv1 = findViewById(R.id.textview1);
-
-        StorageReference pathReference = storageRef.child("재료");
-        if (pathReference == null) {
-            Toast.makeText(AddIngredient.this, "저장소에 사진이 없습니다.", Toast.LENGTH_SHORT).show();
-        } else {
-            StorageReference submitPng = storageRef.child("재료/육류.png");
-            submitPng.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(AddIngredient.this).load(uri).into(iv1);
-                    tv1.setText("육류");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-
-                }
-            });
-        }*/
 
     public void goBeforeActivity(View v) {
         if (before.equals("Freezer")){

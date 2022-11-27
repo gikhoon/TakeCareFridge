@@ -31,12 +31,14 @@ class FridgeData implements Comparable<FridgeData>{
     String imagePath;
     String name; //재료 종류
     String documentName; //document 이름에 들어가는 값
+    String largeClass; //대분류값
     long totalED; //등록일 기준으로 유통기한 ED==유통기한(expiration date)
     long remainED; //남은 유통기한
     int viewType; //Menu인지 BODY인지
 
-    public FridgeData(String imagePath ,String name,String documentName,long totalED, long remainED, int viewType){
+    public FridgeData(String imagePath,String largeClass ,String name,String documentName,long totalED, long remainED, int viewType){
         this.imagePath = imagePath;
+        this.largeClass = largeClass;
         this.name= name;
         this.documentName = documentName;
         this.totalED=totalED;
