@@ -264,14 +264,16 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
 
 
     public void goMainActivity(View v){
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("ID", ID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(FreezerMain.this, AddIngredient.class);
         intent.putExtra("preActivity", "Freezer");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("ID", ID);
         startActivity(intent);
     }

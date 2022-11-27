@@ -95,11 +95,13 @@ public class AddIngredient extends AppCompatActivity {
     public void goBeforeActivity(View v) {
         if (before.equals("Freezer")){
             Intent intent = new Intent(this, FreezerMain.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("ID", ID);
             startActivity(intent);
         }
         else if (before.equals("Fridge")){
             Intent intent = new Intent(this, FridgeMain.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("ID", ID);
             startActivity(intent);
         }

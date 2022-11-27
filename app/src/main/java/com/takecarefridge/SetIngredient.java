@@ -213,6 +213,7 @@ public class SetIngredient extends AppCompatActivity {
                     intent = new Intent(SetIngredient.this, FridgeMain.class);
                 }
                 intent.putExtra("ID", ID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
 
             }
@@ -227,6 +228,7 @@ public class SetIngredient extends AppCompatActivity {
         intent.putExtra("preActivity", before);
         intent.putExtra("largeClass", largeClass);
         intent.putExtra("ID", ID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

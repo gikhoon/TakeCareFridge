@@ -87,6 +87,7 @@ public class AddIngredientDetail extends AppCompatActivity {
         Intent intent = new Intent(this ,AddIngredient.class);
         intent.putExtra("preActivity", before);
         intent.putExtra("ID", ID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

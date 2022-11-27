@@ -251,7 +251,10 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
     } //값 totalProcess에 출력
 
     public void goMainActivity(View v){
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("ID", ID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
