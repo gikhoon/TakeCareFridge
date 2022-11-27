@@ -169,8 +169,6 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                         num++;
 
                                     }
-
-
                                     DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
                                     putFieldRef.update(bigIngredientName+"갯수",num);
                                     putFieldRef.update("남은기한합",addAllDate);
@@ -215,7 +213,6 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                     if (totalEDProgress <= 10) {
                         pb.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
                     }
-
                     if (totalEDProgress > 100) {
                         totalEDProgress = 100;
                     }
@@ -225,12 +222,9 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
-
-
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
     }
-
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(FreezerMain.this, AddIngredient.class);

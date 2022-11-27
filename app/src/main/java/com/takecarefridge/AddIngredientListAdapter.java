@@ -23,7 +23,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-class IngredientData{
+class   IngredientData{
     String name; //재료 이름
     String imagePath; //이미지 경로
 
