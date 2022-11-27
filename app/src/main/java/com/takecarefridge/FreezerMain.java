@@ -131,9 +131,14 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                                                     });
                                                                     Intent intent = new Intent(FreezerMain.this, FreezerMain.class);
                                                                     intent.putExtra("ID", ID);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                                     startActivity(intent);
                                                                     return true;
                                                                 case R.id.menu_searchRecipe:
+                                                                    Intent intent2 = new Intent(FreezerMain.this, RecipeMain.class);
+                                                                    intent2.putExtra("ID", ID);
+                                                                    intent2.putExtra("seachIngredient", data.name);
+                                                                    startActivity(intent2);
                                                                     return true;
                                                                 default:
                                                                     return false;

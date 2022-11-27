@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -118,8 +119,26 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                                 public boolean onMenuItemClick(MenuItem item) {
                                                     switch (item.getItemId()){
                                                         case R.id.menu_delete:
+                                                            DocumentReference dr = db.collection("사용자").document(ID).collection("냉장실")
+                                                                    .document(data.largeClass).collection(data.largeClass).document(data.documentName);
+                                                            dr.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if(task.isSuccessful()) {
+                                                                        Toast.makeText(getApplicationContext(), data.name + "이 삭제됐습니다", Toast.LENGTH_SHORT).show();
+                                                                    }
+                                                                }
+                                                            });
+                                                            Intent intent = new Intent(FridgeMain.this, FridgeMain.class);
+                                                            intent.putExtra("ID", ID);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                            startActivity(intent);
                                                             return true;
                                                         case R.id.menu_searchRecipe:
+                                                            Intent intent2 = new Intent(FridgeMain.this, RecipeMain.class);
+                                                            intent2.putExtra("ID", ID);
+                                                            intent2.putExtra("seachIngredient", data.name);
+                                                            startActivity(intent2);
                                                             return true;
                                                         default:
                                                             return false;
