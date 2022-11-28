@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,46 +5,64 @@
     android:layout_height="match_parent"
     tools:context=".AddIngredient"
     android:orientation="vertical"
-    android:weightSum="8">
+    android:weightSum="12">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="30dp"
         android:layout_weight="1">
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2"
+            android:onClick="goBeforeActivity"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="243dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bar_right2"
+            android:fontFamily="@font/basic_font"
+            android:gravity="center"
             android:text="세부 재료 추가 화면"
-            android:textSize="25sp"
-            android:layout_centerInParent="true"
-            />
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="뒤로 가기" />
-
-
+            android:text="직접 추가"
+            android:layout_alignParentRight="true"
+            android:onClick="goAddSelfActivity"/>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="검색 창"
-            android:textSize="60sp" />
-
-    </RelativeLayout>
     <RelativeLayout
-        android:layout_weight="6"
+        android:layout_weight="11"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_addIngredientDetailListRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"/>
 
+    </RelativeLayout>
 </LinearLayout>

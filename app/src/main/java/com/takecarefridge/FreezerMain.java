@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -27,10 +32,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-
 public class FreezerMain extends AppCompatActivity implements View.OnClickListener{
     RecyclerView mFridgeList;
     IngredientListAdapter mIngredientListAdapter;
+    String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +49,17 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         actionBar.hide();
 
         Intent getIntent = getIntent();
+        ID = getIntent.getStringExtra("ID");
 
-        updateBigIngredientFreshness("asd"); //목록 총 데이터 업데이트
+        updateBigIngredientFreshness(ID); //목록 총 데이터 업데이트
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showTotalFreshness("asd");//전체 게이지 출력 메소드
-        showFreezerScreen("asd");//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
+        showTotalFreshness(ID);//전체 게이지 출력 메소드
+        showFreezerScreen(ID);//RecyclerView 출력시켜주는 메소드 ( 추후 userId에 회원 ID 넣어야함)
     }
 
     public void showFreezerScreen(String userID){
@@ -77,7 +83,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                         @Override
                                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                             if(!task.getResult().isEmpty()) {
-                                                fridgeDataList.add(new FridgeData(null, document.getId(),null, 0, 0, 0));
+                                                fridgeDataList.add(new FridgeData(null, null, document.getId(),null, 0, 0, 0));
                                             }
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 //RemainED 구하기
@@ -90,9 +96,10 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                                 //TotalEd 구하기
                                                 String imagePath = document.getString("이미지");
                                                 String name = document.getString("분류");
+                                                String largeClass = document.getString("대분류");
                                                 String documentName = document.getId();
                                                 //DataList에 넣기
-                                                FridgeData fd = new FridgeData(imagePath, name, documentName, totalEd, remainED, 1);
+                                                FridgeData fd = new FridgeData(imagePath, largeClass, name, documentName, totalEd, remainED, 1);
                                                 fridgeDataList.add(fd);
                                             }
 
@@ -103,7 +110,41 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                                             mIngredientListAdapter.setOnItemClickListener(new IngredientListAdapter.OnItemClickListener() {
                                                 @Override
                                                 public void onItemClick(View v, FridgeData data) {
-                                                    Log.d("HELLO6", data.documentName);
+                                                    PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+                                                    MenuInflater inflater = popup.getMenuInflater();
+                                                    inflater.inflate(R.menu.menu_main, popup.getMenu());
+                                                    popup.show();
+                                                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                        @Override
+                                                        public boolean onMenuItemClick(MenuItem item) {
+                                                            switch (item.getItemId()){
+                                                                case R.id.menu_delete:
+                                                                    DocumentReference dr = db.collection("사용자").document(ID).collection("냉동실")
+                                                                            .document(data.largeClass).collection(data.largeClass).document(data.documentName);
+                                                                    dr.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if(task.isSuccessful()) {
+                                                                                Toast.makeText(getApplicationContext(), data.name + "이 삭제됐습니다", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                    Intent intent = new Intent(FreezerMain.this, FreezerMain.class);
+                                                                    intent.putExtra("ID", ID);
+                                                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                    startActivity(intent);
+                                                                    return true;
+                                                                case R.id.menu_searchRecipe:
+                                                                    Intent intent2 = new Intent(FreezerMain.this, RecipeMain.class);
+                                                                    intent2.putExtra("ID", ID);
+                                                                    intent2.putExtra("seachIngredient", data.name);
+                                                                    startActivity(intent2);
+                                                                    return true;
+                                                                default:
+                                                                    return false;
+                                                            }
+                                                        }
+                                                    });
                                                 }
                                             });
                                             mFridgeList.setAdapter(mIngredientListAdapter);
@@ -170,7 +211,8 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
 
                                     }
                                     DocumentReference putFieldRef = bigIngredientRef.document(bigIngredientName);
-                                    putFieldRef.update(bigIngredientName+"갯수",num);
+                                    String s = bigIngredientName + "갯수";
+                                    putFieldRef.update(s,num);
                                     putFieldRef.update("남은기한합",addAllDate);
                                 }
                             });
@@ -223,12 +265,16 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
         });
     }
     public void goMainActivity(View v){
-        startActivity(new Intent(this, MainActivity.class));
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra("ID", ID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(FreezerMain.this, AddIngredient.class);
         intent.putExtra("preActivity", "Freezer");
+        intent.putExtra("ID", ID);
         startActivity(intent);
     }
 }

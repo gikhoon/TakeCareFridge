@@ -27,6 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import org.checkerframework.checker.guieffect.qual.UI;
 
 public class MainActivity extends AppCompatActivity {
+    String ID;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
@@ -39,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent preIntent = getIntent();
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        ID = "lim";
+        //ID = getIntent.getStringExtra("ID");
 
         firebaseAuth = FirebaseAuth.getInstance();
         user =firebaseAuth.getCurrentUser();
@@ -77,18 +81,26 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void goShoppingBag(View v){
-        startActivity(new Intent(this, ShoppingBag.class));
+        Intent intent = new Intent(this, ShoppingBag.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goRecipeMain(View v){
-        startActivity(new Intent(this, RecipeMain.class));
+        Intent intent = new Intent(this, RecipeMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goFreezeMain(View v){
-        startActivity(new Intent(this, FreezerMain.class));
+        Intent intent = new Intent(this, FreezerMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 
     public void goFridgeMain(View v){
-        startActivity(new Intent(this, FridgeMain.class));
+        Intent intent = new Intent(this, FridgeMain.class);
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 }

@@ -62,21 +62,13 @@
         android:layout_weight="1">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@id/minusButton"
-            android:text="플러스">
-        </Button>
-
-        <Button
-            android:id="@+id/minusButton"
+            android:id="@+id/fridge_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:text="빼기">
-        </Button>
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:text="플러스"/>
     </RelativeLayout>
 </LinearLayout>
