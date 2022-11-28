@@ -53,6 +53,7 @@
             android:layout_margin="5dp"
             android:padding="10dp"
             android:gravity="left"
+            android:inputType="textPassword"
             android:textSize="15dp"
             android:hint="비밀번호 입력"/>
 
@@ -62,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="10dp"
+            android:inputType="textPassword"
             android:gravity="left"
             android:textSize="15dp"
             android:hint="비밀번호 확인"/>
