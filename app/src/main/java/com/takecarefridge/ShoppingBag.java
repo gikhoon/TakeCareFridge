@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,12 +39,17 @@ public class ShoppingBag extends AppCompatActivity{
         /*PlusShoppingBtn.setOnClickListener(this);*/
 
         Intent intent = getIntent();
-        /*ID = intent.getStringExtra("ID");*/
-        ID = "8bzI1MXbXpNH3NiNP1LCCyBbhgz1";
+        ID = intent.getStringExtra("ID");
         ActionBar actionBar =getSupportActionBar();
         actionBar.hide();
+        Log.d("HELLO", ID);
 
-        updateShoppingList("asd");
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        updateShoppingList(ID);
     }
 
     public void updateShoppingList(String userID){
@@ -59,10 +65,10 @@ public class ShoppingBag extends AppCompatActivity{
                     for(QueryDocumentSnapshot document : task.getResult()){
                         if(document.exists()){
                             String name = document.getId();
-
-                            ShoppingData fd = new ShoppingData(name,null,null,null,null);
-
-                            ShoppingDataList.add(fd);
+                            if(!name.equals("base")) {
+                                ShoppingData fd = new ShoppingData(name, null, null, null, null);
+                                ShoppingDataList.add(fd);
+                            }
                         }
                     }
                 }
@@ -87,5 +93,12 @@ public class ShoppingBag extends AppCompatActivity{
 
     public void goMainActivity(View v){
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void goAddIngredient(View v){
+        Intent intent = new Intent(this, AddIngredient.class);
+        intent.putExtra("preActivity", "Shopping");
+        intent.putExtra("ID", ID);
+        startActivity(intent);
     }
 }

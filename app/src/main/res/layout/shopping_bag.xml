@@ -55,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_toStartOf="@id/minusButton"
-            android:text="플러스">
+            android:text="플러스"
+            android:onClick="goAddIngredient">
         </Button>
 
         <Button
