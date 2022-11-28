@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,11 @@ public class SetShoppingIngredient extends AppCompatActivity {
     String smallClass;
     String ID;
     boolean isSelfAdd;
+    private Spinner spinner;
+    private String whereTo;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,28 @@ public class SetShoppingIngredient extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        //drop down 메뉴바 생성
+        spinner = (Spinner)findViewById(R.id.spinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+                whereTo = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         Intent preIntent = getIntent();
         before = preIntent.getStringExtra("preActivity");
@@ -65,7 +94,6 @@ public class SetShoppingIngredient extends AppCompatActivity {
     public void setSetIngredient(){
         ImageView iv = findViewById(R.id.iv_settingShoppingIngredientImage);
         TextView tv_largeClass = findViewById(R.id.tv_settingShoppingIngredientLargeClass);
-        TextView tv_addPlace = findViewById(R.id.tv_settingShoppingIngredientPlace);
         EditText et_settingIngredientName = findViewById(R.id.et_settingShoppingIngredientName);
 
 
@@ -97,7 +125,7 @@ public class SetShoppingIngredient extends AppCompatActivity {
     public void saveIngredient(View v){
         String saveIngredientPlace;
         EditText et = findViewById(R.id.et_settingShoppingIngredientName);
-        TextView tv = findViewById(R.id.tv_settingShoppingIngredientPlace);
+      /*  TextView tv = findViewById(R.id.tv_settingShoppingIngredientPlace);*/
         String ingredientName = et.getText().toString().trim();
 
         if(isSelfAdd){
@@ -134,7 +162,7 @@ public class SetShoppingIngredient extends AppCompatActivity {
                         m.put("이미지",str);
                     }
                     m.put("대분류", largeClass);
-                    m.put("where", tv.getText());
+                    m.put("where", whereTo);
                     smallClassRef.set(m);
 
                     Intent intent = new Intent(SetShoppingIngredient.this,ShoppingBag.class);
