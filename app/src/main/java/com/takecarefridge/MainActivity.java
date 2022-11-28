@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         //현재 로그인 되어있는 사용자의 UID 확인
         if(user != null){
             ID = user.getUid();
-            Log.d("12341234", ID);
         }
     }
 

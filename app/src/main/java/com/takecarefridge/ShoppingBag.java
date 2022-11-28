@@ -38,12 +38,11 @@ public class ShoppingBag extends AppCompatActivity{
         /*PlusShoppingBtn.setOnClickListener(this);*/
 
         Intent intent = getIntent();
-        /*ID = intent.getStringExtra("ID");*/
-        ID = "8bzI1MXbXpNH3NiNP1LCCyBbhgz1";
+        ID = intent.getStringExtra("ID");
         ActionBar actionBar =getSupportActionBar();
         actionBar.hide();
 
-        updateShoppingList("asd");
+        updateShoppingList(ID);
     }
 
     public void updateShoppingList(String userID){
