@@ -80,7 +80,8 @@ public class Signup extends AppCompatActivity {
 
                                 if (!flag) {
                                     Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                                    mregisterBtn.setEnabled(true);
+                                    /*mregisterBtn.setEnabled(true);*/
+
                                 }
                             }
                         });
@@ -101,7 +102,7 @@ public class Signup extends AppCompatActivity {
                    mDialog.show();
 
                    firebaseAuth.createUserWithEmailAndPassword(email,pwd)
-                           .addOnCompleteListener(Signup.this,
+                            .addOnCompleteListener(Signup.this,
                                    new OnCompleteListener<AuthResult>(){
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task){
@@ -120,117 +121,153 @@ public class Signup extends AppCompatActivity {
                                                 hashMap.put("name", name);
                                                 hashMap.put("password", pwd);
 
+
                                                 Map<String, Object> base = new HashMap<>();
                                                 base.put("남은기한", 0);
+
+                                                Map<String, Object> base1 = new HashMap<>();
+                                                base1.put("가공식품갯수", 0);
+                                                base1.put("남은기한합",0);
+
+                                                Map<String, Object> base2 = new HashMap<>();
+                                                base2.put("곡물류갯수", 0);
+                                                base2.put("남은기한합",0);
+
+                                                Map<String, Object> base3 = new HashMap<>();
+                                                base3.put("과일갯수", 0);
+                                                base3.put("남은기한합",0);
+
+                                                Map<String, Object> base4 = new HashMap<>();
+                                                base4.put("수산물갯수", 0);
+                                                base4.put("남은기한합",0);
+
+                                                Map<String, Object> base5 = new HashMap<>();
+                                                base5.put("유제품갯수", 0);
+                                                base5.put("남은기한합",0);
+
+                                                Map<String, Object> base6 = new HashMap<>();
+                                                base6.put("육류갯수", 0);
+                                                base6.put("남은기한합",0);
+
+                                                Map<String, Object> base7 = new HashMap<>();
+                                                base7.put("조미료갯수", 0);
+                                                base7.put("남은기한합",0);
+
+                                                Map<String, Object> base8 = new HashMap<>();
+                                                base8.put("채소갯수", 0);
+                                                base8.put("남은기한합",0);
+
+
+
 
 
                                                 Log.d("asd", name + " ");
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .set(hashMap);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("가공식품")
-                                                        .set(base);
+                                                        .set(base1);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("곡물류")
-                                                        .set(base);
+                                                        .set(base2);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("과일")
-                                                        .set(base);
+                                                        .set(base3);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("수산물")
-                                                        .set(base);
+                                                        .set(base4);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("유제품")
-                                                        .set(base);
+                                                        .set(base5);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("육류")
-                                                        .set(base);
+                                                        .set(base6);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("조미료")
-                                                        .set(base);
+                                                        .set(base7);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
                                                         .collection("냉장실")
                                                         .document("채소")
-                                                        .set(base);
+                                                        .set(base8);
 
                                                 db.collection("사용자")
-                                                        .document(name)
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("가공식품")
+                                                        .set(base1);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("곡물류")
+                                                        .set(base2);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("과일")
+                                                        .set(base3);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("수산물")
+                                                        .set(base4);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("유제품")
+                                                        .set(base5);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("육류")
+                                                        .set(base6);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("조미료")
+                                                        .set(base7);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
+                                                        .collection("냉동실")
+                                                        .document("채소")
+                                                        .set(base8);
+
+                                                db.collection("사용자")
+                                                        .document(uid)
                                                         .collection("장바구니")
                                                         .document("base")
                                                         .set(base);
 
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("가공식품")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("곡물류")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("과일")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("수산물")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("유제품")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("육류")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("조미료")
-                                                        .set(base);
-
-                                                db.collection("사용자")
-                                                        .document(name)
-                                                        .collection("냉동실")
-                                                        .document("채소")
-                                                        .set(base);
 
 
                                                 Intent intent = new Intent(Signup.this, MainActivity.class);
@@ -239,6 +276,7 @@ public class Signup extends AppCompatActivity {
                                                 Toast.makeText(Signup.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                             }
                                             else{
+                                                mSigEmail.setText(null);
                                                 Toast.makeText(Signup.this, "이미 존재하는 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
                                                 return;
                                             }
@@ -247,6 +285,8 @@ public class Signup extends AppCompatActivity {
 
                }
                else{ //비밀번호가 일치하지 않을 때
+                   mSigpassword.setText(null);
+                   mSigpasswordCheck.setText(null);
                    Toast.makeText(Signup.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                    return;
                }
@@ -254,7 +294,6 @@ public class Signup extends AppCompatActivity {
             }
         });
     }
-    public void goToLogin(View view){
-        startActivity(new Intent(this, LoginScreen.class));
-    }
+
+    public void goToLogin(View view){startActivity(new Intent(this, LoginScreen.class));}
 }

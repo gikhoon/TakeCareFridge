@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="장바구니"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textColor="@color/background"/>
 
     </RelativeLayout>
 
@@ -39,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:layout_margin="30dp"/>
+            android:layout_margin="30dp"
+            android:id="@+id/ShoppingRecyclerView"/>
 
     </RelativeLayout>
     <RelativeLayout
@@ -48,6 +50,7 @@
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/plus_shopping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
