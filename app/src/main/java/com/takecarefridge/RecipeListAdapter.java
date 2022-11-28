@@ -86,7 +86,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     private static OnItemClickListener onItemClickListener = null;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
+        this.onItemClickListener = listener ;
     }
 
 
