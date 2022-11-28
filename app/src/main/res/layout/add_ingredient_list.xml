@@ -4,15 +4,15 @@
     android:layout_height="120dp"
     android:layout_margin="8dp"
     android:orientation="horizontal"
-    android:background="@drawable/white_bar5"
+    android:background="@drawable/background_bar"
     android:layout_centerHorizontal="true">
     <ImageView
         android:id="@+id/iv_addingredientImage"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_marginStart="10dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/blue_bar_right2"
+        android:background="@drawable/background_bar"
         android:scaleType="fitCenter"/>
 
     <TextView

@@ -76,7 +76,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:gravity="center"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
 
     </RelativeLayout>
     <RelativeLayout
