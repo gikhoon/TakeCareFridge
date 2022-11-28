@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
-    private String ID;
-    private String userUID;
     private FirebaseFirestore db;
 
     @Override
@@ -43,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         Intent preIntent = getIntent();
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        ID = "lim";
-        //ID = getIntent.getStringExtra("ID");
 
         firebaseAuth = FirebaseAuth.getInstance();
         user =firebaseAuth.getCurrentUser();
@@ -52,24 +48,9 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         //현재 로그인 되어있는 사용자의 UID 확인
         if(user != null){
-            userUID = user.getUid();
-            Log.d("Main", userUID);
+            ID = user.getUid();
+            Log.d("12341234", ID);
         }
-
-        DocumentReference nameRef = db.collection("사용자")
-                .document(user.getUid());
-        nameRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot document =task.getResult();
-                    if(document.exists()){
-                        ID = document.getString("name");
-                        Log.d("login", "로그인한 유저의 닉네임 : " + ID);
-                    }
-                }
-            }
-        });
     }
 
     public void LogOut(View view){
