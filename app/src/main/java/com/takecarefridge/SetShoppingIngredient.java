@@ -114,26 +114,36 @@ public class SetShoppingIngredient extends AppCompatActivity {
         }else{
             smallClassRef = db.collection("사용자").document(ID).collection("장바구니").document(smallClass);
         }
-        Log.d("HELLO10", smallClassRef.getPath());
 
-        Map<String, Object> m = new HashMap<>();
+        smallClassRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                DocumentSnapshot document = task.getResult();
+                if(document.exists()){
+                    Toast.makeText(getApplicationContext(), "이미 존재하는 목록입니다. 다른 목록을 선택해주세요", Toast.LENGTH_SHORT).show();
+                }else{
+                    Map<String, Object> m = new HashMap<>();
 
-        if(isSelfAdd){
-            m.put("분류", ingredientName);
-            String str = "재료/" + largeClass+".png";
-            m.put("이미지",str);
-        }else {
-            m.put("분류", smallClass);
-            String str = "재료/" + largeClass + "/" + smallClass + ".png";
-            m.put("이미지",str);
-        }
-        m.put("대분류", largeClass);
-        m.put("where", tv.getText());
-        smallClassRef.set(m);
+                    if(isSelfAdd){
+                        m.put("분류", ingredientName);
+                        String str = "재료/" + largeClass+".png";
+                        m.put("이미지",str);
+                    }else {
+                        m.put("분류", smallClass);
+                        String str = "재료/" + largeClass + "/" + smallClass + ".png";
+                        m.put("이미지",str);
+                    }
+                    m.put("대분류", largeClass);
+                    m.put("where", tv.getText());
+                    smallClassRef.set(m);
 
-        Intent intent = new Intent(SetShoppingIngredient.this,ShoppingBag.class);
-        intent.putExtra("ID", ID);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+                    Intent intent = new Intent(SetShoppingIngredient.this,ShoppingBag.class);
+                    intent.putExtra("ID", ID);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 }
