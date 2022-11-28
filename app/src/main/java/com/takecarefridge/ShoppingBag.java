@@ -2,6 +2,7 @@ package com.takecarefridge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -37,7 +38,8 @@ public class ShoppingBag extends AppCompatActivity{
         /*PlusShoppingBtn.setOnClickListener(this);*/
 
         Intent intent = getIntent();
-        ID = intent.getStringExtra("ID");
+        /*ID = intent.getStringExtra("ID");*/
+        ID = "8bzI1MXbXpNH3NiNP1LCCyBbhgz1";
         ActionBar actionBar =getSupportActionBar();
         actionBar.hide();
 
@@ -69,6 +71,13 @@ public class ShoppingBag extends AppCompatActivity{
                 mShoppingBagListAdapter = new ShoppingBagListAdapter(ShoppingDataList);
 
                 mShoppingList.setAdapter(mShoppingBagListAdapter);
+
+                mShoppingBagListAdapter.setOnItemClickListener(new ShoppingBagListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, ShoppingData data) {
+                        Log.d("HELLO", data.name);
+                    }
+                });
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(ShoppingBag.this, 1);
                 mShoppingList.setLayoutManager(gridLayoutManager);
             }
