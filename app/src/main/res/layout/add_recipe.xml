@@ -1,9 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRecipe">
+    tools:context=".AddRecipe"
+    android:orientation="vertical"
+    android:weightSum="12">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_weight="1">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2"
+            android:onClick="goRecipeMain"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2" />
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="243dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bar_right2"
+            android:fontFamily="@font/basic_font"
+            android:gravity="center"
+            android:text="레시피 추가 화면"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/uploadRecipe"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/backspace_right2"
+            android:elevation="10dp"
+            android:translationZ="10dp" />
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/plus2"
+            android:elevation="10dp"
+            android:translationZ="10dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/basic_font"
+            android:text="이미지"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ar_imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/background_bar"/>
+
+                <ProgressBar
+                    android:id="@+id/progress_View"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="30dp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/setImage_button"
+                    android:layout_width="205dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/blue_bar_right2"
+                    android:text="사진 선택"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/basic_font"
+                    android:textSize="16sp"/>
+
+                <!--<androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/imageLoading_button"
+                    android:layout_width="205dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="40dp"
+                    android:background="@drawable/blue_bar_right2"
+                    android:text="이미지 업로드"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/basic_font"
+                    android:textSize="16sp"/>-->
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/basic_font"
+            android:text="레시피 이름"/>
+
+        <EditText
+            android:id="@+id/name_editText"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:nextFocusDown="@+id/ingredient_editText"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/basic_font"
+            android:text="재료목록"/>
+
+        <EditText
+            android:id="@+id/ingredient_editText"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:nextFocusDown="@+id/link_editText"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/basic_font"
+            android:text="레시피 링크"/>
+
+        <EditText
+            android:id="@+id/link_editText"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:singleLine="true"
+            android:imeOptions="actionDone"/>
+    </LinearLayout>
+
+</LinearLayout>
