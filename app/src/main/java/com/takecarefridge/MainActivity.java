@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -82,5 +83,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FridgeMain.class);
         intent.putExtra("ID", ID);
         startActivity(intent);
+    }
+
+    private long backKeyPressedTime = 0L;
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() > backKeyPressedTime+2000){
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "앱을 종료하시려면 \'뒤로가기\' 버튼을 한번 더 눌러주세요",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(System.currentTimeMillis() <= backKeyPressedTime+2000){
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 }

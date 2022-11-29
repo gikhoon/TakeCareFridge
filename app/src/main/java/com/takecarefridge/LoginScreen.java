@@ -180,6 +180,20 @@ public class LoginScreen extends AppCompatActivity {
                 });
     }
 
+    private long backKeyPressedTime = 0L;
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() > backKeyPressedTime+2000){
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "앱을 종료하시려면 \'뒤로가기\' 버튼을 한번 더 눌러주세요",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(System.currentTimeMillis() <= backKeyPressedTime+2000){
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+    }
+
 
     // 회원탈퇴
     private void revokeAccess() {
