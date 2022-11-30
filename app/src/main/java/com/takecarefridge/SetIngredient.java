@@ -23,16 +23,12 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class SetIngredient extends AppCompatActivity {
     String before;
@@ -57,7 +53,6 @@ public class SetIngredient extends AppCompatActivity {
         ID = preIntent.getStringExtra("ID");
         isSelfAdd = preIntent.getBooleanExtra("addSelf", false);
 
-        Log.d("HELLO6", before + " " + largeClass + " " + smallClass+" "+ID);
 
         setSetIngredient();
 
@@ -131,7 +126,6 @@ public class SetIngredient extends AppCompatActivity {
         String saveIngredientPlace;
         EditText et = findViewById(R.id.et_settingIngredientName);
         String ingredientName = et.getText().toString();
-        Log.d("HELLO5", ingredientName);
 
         if(isSelfAdd){
             if(ingredientName.equals("")) {
@@ -143,7 +137,6 @@ public class SetIngredient extends AppCompatActivity {
         else if(before.equals("Fridge")){saveIngredientPlace = "냉장실";}
         else{saveIngredientPlace = "장바구니";}
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Log.d("Hello6", "사용자/"+ID+"/"+saveIngredientPlace+"/"+largeClass);
         DocumentReference largeClassRef = db.collection("사용자").document(ID).collection(saveIngredientPlace).document(largeClass);
         largeClassRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -154,13 +147,11 @@ public class SetIngredient extends AppCompatActivity {
 
                     //대분류 갯수 업데이트
                     if (s.getLong(largeClass+"갯수") == null) {
-                        Log.d("HELLO6", largeClass + "갯수"+"   1");
                         largeClassRef.update(largeClass + "갯수", 1);
                     }else{
                         String str = largeClass + "갯수";
                         long num = s.getLong(str);
                         num++;
-                        Log.d("HELLO6", str+"    "+num);
                         largeClassRef.update(largeClass + "갯수", num);
                     }
 
@@ -168,19 +159,16 @@ public class SetIngredient extends AppCompatActivity {
                     long d = s.getLong("남은기한합");
                     if(d>100){d=100;}
                     d += leftDate;
-                    Log.d("HELLO6", "남은기한합    " + d);
                     largeClassRef.update("남은기한합", d);
 
                     //smallClass 가지고 있는 갯수 업데이트
                     if(s.getLong(smallClass)==null) {
                         ingredientSum=1;
-                        Log.d("HELLO6", ingredientName +"   1");
                         largeClassRef.update(ingredientName,1);
                     }else{
                         long ingredientNum = s.getLong(smallClass);
                         ingredientNum++;
                         ingredientSum = ingredientNum;
-                        Log.d("HELLO6", smallClass+ "    "+ingredientNum);
                         largeClassRef.update(smallClass, ingredientNum);
                     }
                 }
