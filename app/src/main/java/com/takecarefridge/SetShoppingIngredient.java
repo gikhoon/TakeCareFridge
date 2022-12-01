@@ -172,6 +172,5 @@ public class SetShoppingIngredient extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

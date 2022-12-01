@@ -42,6 +42,7 @@ public class SetIngredient extends AppCompatActivity {
     boolean isSelfAdd;
     long leftDate = 0;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +82,6 @@ public class SetIngredient extends AppCompatActivity {
             long dDayTime = dDay.getTimeInMillis();
             long todayTime = Calendar.getInstance().getTimeInMillis();
             leftDate = (dDayTime - todayTime) / (60 * 60 * 24 * 1000);
-
             //유통기한 일수 계산
         }
     };

@@ -54,23 +54,17 @@
 
         <Button
             android:id="@+id/plus_shopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@id/minusButton"
             android:text="플러스"
-            android:onClick="goAddIngredient">
-        </Button>
-
-        <Button
-            android:id="@+id/minusButton"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:text="빼기">
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:onClick="goAddIngredient">
         </Button>
+
     </RelativeLayout>
 
 </LinearLayout>
