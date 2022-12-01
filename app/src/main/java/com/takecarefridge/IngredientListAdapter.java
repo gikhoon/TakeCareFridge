@@ -104,7 +104,11 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             Glide.with(holder.image.getContext()).load(pathReference).into(holder.image);
             holder.name.setText(item.name);
-            holder.EDProgressBar.setProgress((int)(item.remainED*100/item.totalED));
+            if(item.totalED<=0){
+                holder.EDProgressBar.setProgress(0);
+            }else {
+                holder.EDProgressBar.setProgress((int) (item.remainED * 100 / item.totalED));
+            }
 
             if (item.remainED < 0) {
                 holder.remainED.setText(item.remainED + "일(만료)");
