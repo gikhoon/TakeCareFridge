@@ -105,5 +105,11 @@ public class AddIngredient extends AppCompatActivity {
             intent.putExtra("ID", ID);
             startActivity(intent);
         }
+        else{
+            Intent intent = new Intent(this, ShoppingBag.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("ID", ID);
+            startActivity(intent);
+        }
     }
 }
