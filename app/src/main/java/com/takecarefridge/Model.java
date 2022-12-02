@@ -1,27 +1,29 @@
 package com.takecarefridge;
 
+import android.net.Uri;
+
 public class Model {
-    private String 이미지;
-    private String 링크;
+    private Uri imageUrl;
+    private String link;
 
-    public Model(String 이미지, String 링크) {
-        this.이미지 = 이미지;
-        this.링크 = 링크;
+    public Model(Uri imageUrl, String link) {
+        this.imageUrl = imageUrl;
+        this.link = link;
     }
 
-    public String getImage() {
-        return 이미지;
+    public Uri getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String 이미지) {
-        this.이미지 = 이미지;
+    public void setImageUrl(Uri imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getLink() {
-        return 링크;
+        return link;
     }
 
-    public void setLink(String 링크) {
-        this.링크 = 링크;
+    public void setLink(String link) {
+        this.link = link;
     }
 }
