@@ -8,11 +8,11 @@
     android:layout_centerHorizontal="true">
     <ImageView
         android:id="@+id/iv_addIngredientDetailImage"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/blue_bar_right2"
+        android:background="@drawable/background_bar"
         android:scaleType="fitCenter"/>
 
     <TextView

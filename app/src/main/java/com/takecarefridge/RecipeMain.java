@@ -49,16 +49,29 @@ public class RecipeMain extends AppCompatActivity {
     ArrayList<RecipeData> recipeDataList = new ArrayList<>();
     ArrayList<RecipeData> search_list = new ArrayList<>();
     EditText editText;
+    String searchIngredient;
+    boolean searchIngredientCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_main);
+        editText = findViewById(R.id.rm_editText);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Intent getIntent = getIntent();
+        searchIngredientCheck = getIntent.getBooleanExtra("searchIngredientCheck",false);
+
+        if(searchIngredientCheck) {
+            searchIngredient = getIntent.getStringExtra("searchIngredient");
+            editText.setText(searchIngredient);
+            search();
+        }
+        else search();
 
         db.collection("레시피")
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -133,9 +146,21 @@ public class RecipeMain extends AppCompatActivity {
                         }
                     }
                 });
+        //엔터키로 키보드 내리기
+        editText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
 
-        editText = findViewById(R.id.rm_editText);
-
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);    //hide keyboard
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+    public void search(){
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -150,38 +175,36 @@ public class RecipeMain extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 String searchText = editText.getText().toString();
-                search_list.clear();
-
-                if(searchText.equals("")){
-                    mRecipeListAdapter.setItems(recipeDataList);
-                }
-                else {
-                    // 검색 단어를 포함하는지 확인
+                if(searchIngredientCheck) {
+                    search_list.clear();
+                    searchText = searchIngredient;
+                    Log.d("tag",searchText);
                     for (int a = 0; a < recipeDataList.size(); a++) {
                         if ((recipeDataList.get(a).name.toLowerCase().contains(searchText.toLowerCase())) ||
-                                (recipeDataList.get(a).listIngredient.toLowerCase().contains(searchText.toLowerCase())))
-                        {
+                                (recipeDataList.get(a).listIngredient.toLowerCase().contains(searchText.toLowerCase()))) {
                             search_list.add(recipeDataList.get(a));
                         }
                         mRecipeListAdapter.setItems(search_list);
                     }
                 }
-            }
-        });
-        //엔터키로 키보드 내리기
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                else {
+                    search_list.clear();
 
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);    //hide keyboard
-                    return true;
+                    if (searchText.equals("")) {
+                        mRecipeListAdapter.setItems(recipeDataList);
+                    } else {
+                        // 검색 단어를 포함하는지 확인
+                        for (int a = 0; a < recipeDataList.size(); a++) {
+                            if ((recipeDataList.get(a).name.toLowerCase().contains(searchText.toLowerCase())) ||
+                                    (recipeDataList.get(a).listIngredient.toLowerCase().contains(searchText.toLowerCase()))) {
+                                search_list.add(recipeDataList.get(a));
+                            }
+                            mRecipeListAdapter.setItems(search_list);
+                        }
+                    }
                 }
-                return false;
             }
         });
-
     }
 
     public void putString(int i, StringBuffer buffer){

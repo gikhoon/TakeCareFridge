@@ -9,7 +9,7 @@
     android:weightSum="12">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="20dp"
         android:layout_weight="1">
 
         <Button
@@ -29,7 +29,8 @@
             android:layout_marginStart="10dp"
             android:translationZ="10dp"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2" />
+            android:background="@drawable/backspace_right2"
+            tools:ignore="DuplicateIds" />
 
         <TextView
             android:id="@+id/tv"
@@ -67,8 +68,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_weight="2"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -141,8 +143,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_weight="2"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -166,8 +169,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:layout_weight="2"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -177,6 +181,14 @@
             android:layout_marginStart="30dp"
             android:fontFamily="@font/basic_font"
             android:text="재료목록"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/basic_font"
+            android:text="(쉼표+스페이스바로 구분해주세요) ex)&quot;, &quot;"/>
 
         <EditText
             android:id="@+id/ingredient_editText"
@@ -191,8 +203,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
         android:layout_weight="2"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <TextView

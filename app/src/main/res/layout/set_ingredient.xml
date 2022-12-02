@@ -61,7 +61,7 @@
                 android:id="@+id/iv_settingIngredientImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@android:color/background_dark"/>
+                android:src="@drawable/background_bar"/>
 
             <TextView
                 android:id="@+id/tv_settingIngredientLargeClass"
@@ -146,6 +146,7 @@
             android:layout_below="@+id/rl_3"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
+            android:background="@drawable/blue_bar_right2"
             android:text="추가" />
     </RelativeLayout>
 
