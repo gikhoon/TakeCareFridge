@@ -1,6 +1,5 @@
 package com.takecarefridge;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,23 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-
-import org.checkerframework.checker.guieffect.qual.UI;
 
 public class MainActivity extends AppCompatActivity {
     String ID;
@@ -49,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         //현재 로그인 되어있는 사용자의 UID 확인
         if(user != null){
             ID = user.getUid();
-            Log.d("12341234", ID);
         }
     }
 
@@ -83,5 +69,19 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FridgeMain.class);
         intent.putExtra("ID", ID);
         startActivity(intent);
+    }
+
+    private long backKeyPressedTime = 0L;
+    @Override
+    public void onBackPressed() {
+        if(System.currentTimeMillis() > backKeyPressedTime+2000){
+            backKeyPressedTime = System.currentTimeMillis();
+            Toast.makeText(this, "앱을 종료하시려면 \'뒤로가기\' 버튼을 한번 더 눌러주세요",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(System.currentTimeMillis() <= backKeyPressedTime+2000){
+            moveTaskToBack(true);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.takecarefridge;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -10,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -104,15 +107,19 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             Glide.with(holder.image.getContext()).load(pathReference).into(holder.image);
             holder.name.setText(item.name);
+            if(item.totalED<=0){
+                holder.EDProgressBar.setProgress(0);
+            }else {
+                holder.EDProgressBar.setProgress((int) (item.remainED * 100 / item.totalED));
+            }
 
             if (item.remainED < 0) {
-                holder.EDProgressBar.setProgress(0);
                 holder.remainED.setText(item.remainED + "일(만료)");
             } else {
-                if (item.remainED <= 10) {
-                    holder.EDProgressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#FF0000")));
+                if(item.remainED<5){
+                    holder.leftEDAlmost.setVisibility(View.VISIBLE);
+                    holder.relativeLayout.setBackgroundColor(R.drawable.blue_bar);
                 }
-                holder.EDProgressBar.setProgress((int) item.remainED); //남은 일자로 수정
                 holder.remainED.setText(item.remainED + "일");
             }
 
@@ -156,6 +163,8 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView name;
         TextView remainED;
         ProgressBar EDProgressBar;
+        TextView leftEDAlmost; //임박 TextView
+        RelativeLayout relativeLayout;
 
         public IngredientBodyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -164,6 +173,8 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             name = itemView.findViewById(R.id.tv_ingredientName);
             remainED = itemView.findViewById(R.id.tv_ingredientED);
             EDProgressBar = itemView.findViewById(R.id.pb_edProgressBar);
+            leftEDAlmost = itemView.findViewById(R.id.tv_ingredientEDAlmost);
+            relativeLayout = itemView.findViewById(R.id.rl_ingredient_layout);
         }
     }
 }

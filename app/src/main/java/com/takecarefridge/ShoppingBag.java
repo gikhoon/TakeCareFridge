@@ -80,7 +80,6 @@ public class ShoppingBag extends AppCompatActivity{
             long dDayTime = dDay.getTimeInMillis();
             long todayTime = Calendar.getInstance().getTimeInMillis();
             leftDate = (dDayTime - todayTime) / (60 * 60 * 24 * 1000);
-
             //유통기한 일수 계산
         }
     };
