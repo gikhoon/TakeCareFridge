@@ -29,7 +29,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 public class LoginScreen extends AppCompatActivity {
@@ -48,6 +51,7 @@ public class LoginScreen extends AppCompatActivity {
     private int RC_SIGN_IN=123;
     private EditText editTextEmail;
     private EditText editTextpassword;
+    String ID;
 
 
     @Override
@@ -65,9 +69,21 @@ public class LoginScreen extends AppCompatActivity {
 
         //로그인을 하였는데 홈화면에서 로그인 화면으로 돌아갈 떄
         if(firebaseAuth.getCurrentUser() != null){
-            Toast.makeText(LoginScreen.this, "환영합니다", Toast.LENGTH_SHORT).show();
+           /* DocumentReference doRef = db.collection("사용자")
+                    .document();
+            doRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if(document.exists()){
+                            ID = document.getString("name");
+                        }
+                    }
+                }
+            });*/
             Intent intent= new Intent(getApplicationContext(), MainActivity.class); //getApplicationContext(): 어플리케이션의 life cycle
-
+            Toast.makeText(LoginScreen.this, "환영합니다", Toast.LENGTH_SHORT).show();
             /* intent.putExtra("ID", )*/
             startActivity(intent);
         }

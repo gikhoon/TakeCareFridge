@@ -66,14 +66,23 @@ public class AddIngredientDetail extends AppCompatActivity {
                             mAddIngredientDetailListAdapter.setOnClickListener(new AddIngredientDetailListAdapter.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(View v, IngredientDetailData data) {
-                                    Intent intent = new Intent(AddIngredientDetail.this, SetIngredient.class);
-                                    intent.putExtra("preActivity",before);
-                                    intent.putExtra("largeClass", largeClass);
-                                    intent.putExtra("smallClass", data.name);
-                                    intent.putExtra("ID", ID);
-                                    intent.putExtra("addSelf", false);
-                                    startActivity(intent);
-                                    //largeClass, preActivity, ID 필요
+                                    if(before.equals("Shopping")){
+                                        Intent intent = new Intent(AddIngredientDetail.this,SetShoppingIngredient.class);
+                                        intent.putExtra("largeClass", largeClass);
+                                        intent.putExtra("preActivity", before);
+                                        intent.putExtra("smallClass", data.name);
+                                        intent.putExtra("ID", ID);
+                                        intent.putExtra("addSelf", false);
+                                        startActivity(intent);
+                                    }else {
+                                        Intent intent = new Intent(AddIngredientDetail.this, SetIngredient.class);
+                                        intent.putExtra("preActivity", before);
+                                        intent.putExtra("largeClass", largeClass);
+                                        intent.putExtra("smallClass", data.name);
+                                        intent.putExtra("ID", ID);
+                                        intent.putExtra("addSelf", false);
+                                        startActivity(intent);
+                                    }
                                 }
                             });
 
@@ -91,12 +100,22 @@ public class AddIngredientDetail extends AppCompatActivity {
     }
 
     public void goAddSelfActivity(View v) {
-        Intent intent = new Intent(this, SetIngredient.class);
-        intent.putExtra("preActivity", before);
-        intent.putExtra("largeClass", largeClass);
-        intent.putExtra("smallClass", "null");
-        intent.putExtra("ID", ID);
-        intent.putExtra("addSelf", true);
-        startActivity(intent);
+        if(before.equals("Shopping")){
+            Intent intent = new Intent(AddIngredientDetail.this,SetShoppingIngredient.class);
+            intent.putExtra("preActivity", before);
+            intent.putExtra("largeClass", largeClass);
+            intent.putExtra("smallClass", "null");
+            intent.putExtra("ID", ID);
+            intent.putExtra("addSelf", true);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(this, SetIngredient.class);
+            intent.putExtra("preActivity", before);
+            intent.putExtra("largeClass", largeClass);
+            intent.putExtra("smallClass", "null");
+            intent.putExtra("ID", ID);
+            intent.putExtra("addSelf", true);
+            startActivity(intent);
+        }
     }
 }
