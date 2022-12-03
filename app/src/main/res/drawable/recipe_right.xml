@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_baseline_library_books_24"
+        android:width="30dp"
+        android:height="30dp"
+        android:top="5dp"/>
+</layer-list>

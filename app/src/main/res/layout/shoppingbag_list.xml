@@ -11,16 +11,21 @@
         android:layout_width="150dp"
         android:layout_height="30dp"
         android:text="소고기"
+        android:fontFamily="@font/basic_font"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
         android:textColor="@color/background"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center"/>
 
     <CheckBox
+        android:textStyle="bold"
+        android:fontFamily="@font/basic_font"
         android:id="@+id/Shoppingcheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="구매완료"
         android:layout_marginEnd="20dp"
         android:layout_alignParentRight="true"/>

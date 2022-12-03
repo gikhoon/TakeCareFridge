@@ -10,11 +10,48 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로 가기"
-            android:onClick="goMainActivity"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/blue_icon_right"
+            android:onClick="goMainActivity"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:translationZ="10dp"
+            android:elevation="10dp"
+            android:background="@drawable/backspace_right2" />
+
+        <Button
+            android:id="@+id/plus_shopping"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/blue_icon_right"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"
+            android:onClick="goAddIngredient" />
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/plus2"
+            android:elevation="10dp"
+            android:translationZ="10dp" />
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,8 +63,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="장바구니"
-            android:textSize="40sp"
-            android:textColor="@color/background"/>
+            android:textColor="@color/background"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/basic_font"/>
 
     </RelativeLayout>
 
@@ -45,25 +84,6 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             android:choiceMode="singleChoice" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/plus_shopping"
-            android:text="플러스"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:onClick="goAddIngredient">
-        </Button>
 
     </RelativeLayout>
 

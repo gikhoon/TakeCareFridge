@@ -18,10 +18,11 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:translationZ="10dp"
+            android:background="@drawable/blue_icon_right"
+            android:onClick="goBeforeActivity"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2"
-            android:onClick="goBeforeActivity"/>
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <ImageView
             android:layout_width="40dp"
@@ -37,13 +38,16 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/blue_bar_right2"
+            android:background="@drawable/blue_bar_right"
             android:fontFamily="@font/basic_font"
             android:gravity="center"
             android:text="재료 설정"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,9 +65,13 @@
                 android:id="@+id/iv_settingShoppingIngredientImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@android:color/background_dark"/>
+                android:background="@drawable/background_bar"
+                android:elevation="10dp"
+                android:translationZ="1dp"
+                android:stateListAnimator="@null"/>
 
             <TextView
+                android:fontFamily="@font/basic_font"
                 android:id="@+id/tv_settingShoppingIngredientLargeClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,6 +82,7 @@
                 android:layout_toRightOf="@+id/iv_settingShoppingIngredientImage"/>
 
             <EditText
+                android:fontFamily="@font/basic_font"
                 android:id="@+id/et_settingShoppingIngredientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,8 +102,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/s_rl_1"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="50dp">
             <TextView
+                android:fontFamily="@font/basic_font"
                 android:id="@+id/tv_settingShoppingTv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,6 +113,7 @@
                 android:text="보관 장소"/>
 
             <Spinner
+                android:fontFamily="@font/basic_font"
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,12 +129,19 @@
         </RelativeLayout>
 
         <Button
+            android:fontFamily="@font/basic_font"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/background"
             android:id="@+id/bt_addShoppingIngredientInDB"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/s_rl_2"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
-            android:text="장바구니에 넣기" />
+            android:text="장바구니에 넣기"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
     </RelativeLayout>
 </LinearLayout>

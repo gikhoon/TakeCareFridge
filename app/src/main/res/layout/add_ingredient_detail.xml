@@ -16,39 +16,65 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:translationZ="10dp"
+            android:background="@drawable/blue_icon_right"
+            android:onClick="goBeforeActivity"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2"
-            android:onClick="goBeforeActivity"/>
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:translationZ="10dp"
+            android:background="@drawable/backspace_right2"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2" />
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <TextView
             android:layout_width="243dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/blue_bar_right2"
+            android:background="@drawable/blue_bar_right"
             android:fontFamily="@font/basic_font"
             android:gravity="center"
             android:text="세부 재료 추가 화면"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="직접 추가"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/blue_icon_right"
             android:layout_alignParentRight="true"
-            android:onClick="goAddSelfActivity"/>
+            android:onClick="goAddSelfActivity"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null" />
+
+        <TextView
+            android:fontFamily="@font/basic_font"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="임의 추가"
+            android:gravity="center"
+            android:layout_width="42dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="354dp"
+            android:background="@drawable/blue_bar_right"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null" />
+
     </RelativeLayout>
 
     <RelativeLayout

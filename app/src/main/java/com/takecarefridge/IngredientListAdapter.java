@@ -1,5 +1,6 @@
 package com.takecarefridge;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -95,6 +96,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewholder, int position) {
         if(viewholder instanceof IngredientBodyViewHolder){
@@ -118,7 +120,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 if(item.remainED<5){
                     holder.leftEDAlmost.setVisibility(View.VISIBLE);
-                    holder.relativeLayout.setBackgroundColor(R.drawable.blue_bar);
+                    holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFED6767"));
                 }
                 holder.remainED.setText(item.remainED + "일");
             }

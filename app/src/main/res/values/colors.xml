@@ -10,4 +10,5 @@
     <color name="background">#66ccff</color>
     <color name="background2">#44DDEE</color>
     <color name="red">#FF0000</color>
+    <color name="imminent">#ED6767</color>
 </resources>
