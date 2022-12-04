@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +39,8 @@ public class Signup extends AppCompatActivity {
     EditText mSigpasswordCheck;
     Button mregisterBtn;
 
+    boolean mNickNameFlag;
+
 
     private FirebaseAuth firebaseAuth; //안드로이드와 파이어베이스 사이의 인증을 확인하기 위한 인스턴스 선언
 
@@ -53,7 +57,9 @@ public class Signup extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         FirebaseFirestore db = FirebaseFirestore.getInstance(); // FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-                                                                    //파이어베이스 접근권한 갖기
+        //닉네임 중복 방지
+        mNickNameFlag = false;
+                                                                      //파이어베이스 접근권한 갖기
         mNicName = findViewById(R.id.user_NicName);
         mNicDupCheck = findViewById(R.id.NickName_check);
         mSigEmail = findViewById(R.id.user_id);
@@ -82,15 +88,34 @@ public class Signup extends AppCompatActivity {
                                         }
                                     }
 
-                                    if (!flag) {
-                                        Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                                        mregisterBtn.setEnabled(true);
-                                    }
+                                }
+                                if (!flag) {
+                                    Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                                    mregisterBtn.setEnabled(true);
+                                    mNickNameFlag = true;
                                 }
                             }
                         });
             }
         });
+
+        mNicName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mNickNameFlag = false;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+
         mregisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +123,16 @@ public class Signup extends AppCompatActivity {
                String pwd = mSigpassword.getText().toString().trim();
                String pwdcheck = mSigpasswordCheck.getText().toString().trim();
                String name =mNicName.getText().toString().trim();
+
+                if( email.length() == 0 | pwd.length() == 0 | pwdcheck.length() == 0 | name.length() == 0){
+                    Toast.makeText(Signup.this, "모든 정보를 입력하였는지 확인해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!mNickNameFlag) {
+                    Toast.makeText(Signup.this, "닉네임 중복 체크해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                if(pwd.equals(pwdcheck)){
                    Log.d(TAG, "등록 버튼 " + email + " , " + pwd);
