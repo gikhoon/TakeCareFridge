@@ -3,6 +3,7 @@ package com.takecarefridge;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -44,6 +45,9 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         //파이어베이스 접근
         firebaseAuth = FirebaseAuth.getInstance(); //선언한 인스턴스를 초기화
         FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -69,19 +73,19 @@ public class Signup extends AppCompatActivity {
                                 boolean flag = false;
                                 if (task.isSuccessful()) {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        if (document.getId().equals(Nickname)) {
+                                        String nickName =String.valueOf(document.get("name"));
+                                        if (nickName.equals(Nickname)) {
                                             mNicName.setText(null);
                                             Toast.makeText(Signup.this, "이미 존재하는 닉네임입니다.\n 다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
                                             flag = true;
                                             break;
                                         }
                                     }
-                                }
 
-                                if (!flag) {
-                                    Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
-                                    /*mregisterBtn.setEnabled(true);*/
-
+                                    if (!flag) {
+                                        Toast.makeText(Signup.this, "사용 가능한 닉네임입니다.", Toast.LENGTH_SHORT).show();
+                                        mregisterBtn.setEnabled(true);
+                                    }
                                 }
                             }
                         });
@@ -278,6 +282,7 @@ public class Signup extends AppCompatActivity {
                                             else{
                                                 mSigEmail.setText(null);
                                                 Toast.makeText(Signup.this, "이미 존재하는 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                                                mDialog.cancel();
                                                 return;
                                             }
                                         }

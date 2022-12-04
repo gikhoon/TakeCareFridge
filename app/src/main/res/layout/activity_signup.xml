@@ -103,6 +103,7 @@
             android:fontFamily="@font/basic_font"
             android:textColor="@color/white"
             android:text="확인"
+            android:enabled="false"
             android:elevation="10dp"
             android:translationZ="1dp"
             android:stateListAnimator="@null"/>
