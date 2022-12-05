@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -187,7 +186,6 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         if (document.exists()) {
                             String bigIngredientName = document.getId();
-                            Log.d("HELLO5", bigIngredientName);
                             CollectionReference smallIngredientRef = bigIngredientRef.document(bigIngredientName)
                                     .collection(bigIngredientName);
                             smallIngredientRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -217,7 +215,6 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                     putFieldRef.update(bigIngredientName+"갯수",num);
                                     putFieldRef.update("남은기한합",addAllDate);
 
-                                    Log.d("HELLO5", addAllDate+" ");
                                 }
                             });
                         }
