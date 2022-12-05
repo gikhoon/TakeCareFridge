@@ -120,10 +120,15 @@ public class IngredientListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 holder.leftEDAlmost.setVisibility(View.VISIBLE);
                 holder.leftEDAlmost.setText("만료");
                 holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFF0000"));
+                holder.name.setTextColor(Color.parseColor("#AFFFFFFF"));
+                holder.remainED.setTextColor(Color.parseColor("#AFFFFFFF"));
+                holder.leftEDAlmost.setTextColor(Color.parseColor("#AFFFFFFF"));
             } else {
                 if(item.remainED<5){
                     holder.leftEDAlmost.setVisibility(View.VISIBLE);
                     holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFff7f00"));
+                    holder.name.setTextColor(Color.parseColor("#FFFFFFFF"));
+                    holder.remainED.setTextColor(Color.parseColor("#FFFFFFFF"));
                 }
                 holder.remainED.setText(item.remainED + "일");
             }
