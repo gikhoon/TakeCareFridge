@@ -263,6 +263,7 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
             }
         });
     }
+
     public void goMainActivity(View v){
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("ID", ID);
