@@ -107,13 +107,6 @@
                     android:translationZ="1dp"
                     android:stateListAnimator="@null"/>
 
-                <ProgressBar
-                    android:id="@+id/progress_View"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="30dp" />
-
             </RelativeLayout>
 
             <LinearLayout
@@ -182,7 +175,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <TextView
@@ -192,6 +185,13 @@
             android:layout_marginStart="30dp"
             android:fontFamily="@font/basic_font"
             android:text="재료목록"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="30dp"
+            android:fontFamily="@font/basic_font"
+            android:text="[쉼표+스페이스바로 구분해주세요. ex) &quot;, &quot;]"/>
 
         <EditText
             android:id="@+id/ingredient_editText"

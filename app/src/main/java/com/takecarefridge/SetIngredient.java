@@ -125,7 +125,7 @@ public class SetIngredient extends AppCompatActivity {
     public void saveIngredient(View v){
         String saveIngredientPlace;
         EditText et = findViewById(R.id.et_settingIngredientName);
-        String ingredientName = et.getText().toString();
+        String ingredientName = et.getText().toString().trim();
 
         if(isSelfAdd){
             if(ingredientName.equals("")) {

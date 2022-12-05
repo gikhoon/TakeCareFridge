@@ -31,6 +31,23 @@
             android:elevation="10dp"
             android:background="@drawable/backspace_right2" />
 
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="143dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bar_right"
+            android:fontFamily="@font/basic_font"
+            android:gravity="center"
+            android:text="장바구니"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
+
         <Button
             android:id="@+id/plus_shopping"
             android:layout_width="40dp"
@@ -51,22 +68,6 @@
             android:background="@drawable/plus2"
             android:elevation="10dp"
             android:translationZ="10dp" />
-
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="장바구니"
-            android:textColor="@color/background"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/basic_font"/>
 
     </RelativeLayout>
 

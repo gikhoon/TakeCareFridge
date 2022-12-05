@@ -137,6 +137,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                                                         case R.id.menu_searchRecipe:
                                                             Intent intent2 = new Intent(FridgeMain.this, RecipeMain.class);
                                                             intent2.putExtra("ID", ID);
+                                                            intent2.putExtra("searchIngredientCheck", true);
                                                             intent2.putExtra("searchIngredient", data.name);
                                                             startActivity(intent2);
                                                             return true;
