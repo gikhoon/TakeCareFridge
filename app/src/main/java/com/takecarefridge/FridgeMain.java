@@ -261,7 +261,7 @@ public class FridgeMain extends AppCompatActivity implements View.OnClickListene
                         totalEDProgress = 100;
                     }
                     pb.setProgress(totalEDProgress);
-                    freshnessTV.setText(totalEDProgress + "점");
+                    freshnessTV.setText(totalEDProgress + "일");
                 }
             }
         });

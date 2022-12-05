@@ -258,11 +258,12 @@ public class FreezerMain extends AppCompatActivity implements View.OnClickListen
                         totalEDProgress = 100;
                     }
                     pb.setProgress(totalEDProgress);
-                    freshnessTV.setText(totalEDProgress + "점");
+                    freshnessTV.setText(totalEDProgress + "일");
                 }
             }
         });
     }
+
     public void goMainActivity(View v){
         Intent intent = new Intent(this,MainActivity.class);
         intent.putExtra("ID", ID);
