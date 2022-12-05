@@ -3,16 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="12">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="뒤로 가기"
-            android:onClick="goMainActivity"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/blue_icon_right"
+            android:onClick="goMainActivity"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/backspace_right2"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
+        <Button
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/blue_icon_right"
+            android:layout_alignParentRight="true"
+            android:id="@+id/fridge_plus"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null" />
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="355dp"
+            android:background="@drawable/plus2"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -24,6 +60,7 @@
             android:id="@+id/tv_fridgeTotalED"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/basic_font"
             android:text="냉장실 신선도"
             android:layout_centerHorizontal="true"/>
 
@@ -41,12 +78,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/basic_font"
             android:text="신선도"
             android:layout_below="@id/pb_fridgeTotalED"/>
 
     </RelativeLayout>
     <RelativeLayout
-        android:layout_weight="7"
+        android:layout_weight="10"
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
@@ -55,20 +93,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <Button
-            android:id="@+id/fridge_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
-            android:text="플러스"/>
     </RelativeLayout>
 </LinearLayout>

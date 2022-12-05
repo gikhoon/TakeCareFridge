@@ -17,10 +17,11 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="16dp"
-            android:translationZ="10dp"
+            android:background="@drawable/blue_icon_right"
+            android:onClick="goMainActivity"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2"
-            android:onClick="goMainActivity"/>
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <ImageView
             android:layout_width="40dp"
@@ -37,23 +38,27 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/blue_bar_right2"
+            android:background="@drawable/blue_bar_right"
             android:fontFamily="@font/basic_font"
             android:gravity="center"
             android:text="재료 추가 화면"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <Button
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="355dp"
-            android:background="@drawable/backspace_right2"
+            android:background="@drawable/blue_icon_right"
             android:elevation="10dp"
-            android:onClick="goAddRecipeActivity"
-            android:translationZ="10dp" />
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"
+            android:onClick="goAddRecipeActivity" />
 
         <ImageView
             android:layout_width="41dp"

@@ -3,66 +3,162 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:weightSum="8">
+    android:weightSum="11">
 
-    <RelativeLayout
+    <LinearLayout
+        android:clipToPadding="false"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="10dp"
+        android:weightSum="3">
 
         <Button
             android:id="@+id/shoppingBag"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/blue_bar_right2"
+            android:drawableTop="@drawable/shopping_right"
+            android:elevation="10dp"
+            android:fontFamily="@font/basic_font"
+            android:onClick="goShoppingBag"
+            android:stateListAnimator="@null"
             android:text="장바구니"
-            android:onClick="goShoppingBag"/>
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:translationZ="1dp" />
+
         <Button
             android:id="@+id/bt_recipe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
             android:text="레시피"
             android:layout_toEndOf="@id/shoppingBag"
-            android:onClick="goRecipeMain"/>
+            android:onClick="goRecipeMain"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/basic_font"
+            android:background="@drawable/blue_bar_right2"
+            android:drawableTop="@drawable/recipe_right"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
         <Button
             android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그이웃"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:text="로그아웃"
             android:layout_alignParentRight="true"
-            android:onClick="LogOut"/>
+            android:onClick="LogOut"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/basic_font"
+            android:background="@drawable/blue_bar_right2"
+            android:drawableTop="@drawable/logout_right"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <RelativeLayout
+        android:clipToPadding="false"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7">
+        android:layout_weight="10">
 
         <ImageButton
             android:id="@+id/ib_freezer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="352dp"
+            android:layout_height="186dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher_foreground"
+            android:layout_marginTop="5dp"
+            android:elevation="10dp"
+            android:stateListAnimator="@null"
+            android:translationZ="2dp"
+            android:background="@drawable/background_bar"
             android:onClick="goFreezeMain"/>
 
         <ImageButton
             android:id="@+id/ib_fridge"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="352dp"
+            android:layout_height="382dp"
             android:layout_below="@id/ib_freezer"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
-            android:src="@drawable/ic_launcher_foreground"
-            android:onClick="goFridgeMain"/>
+            android:elevation="10dp"
+            android:layout_marginStart="30dp"
+            android:stateListAnimator="@null"
+            android:translationZ="1dp"
+            android:background="@drawable/background_bar"
+            android:onClick="goFridgeMain" />
+
+        <ImageView
+            android:id="@+id/iv_freezer"
+            android:layout_width="352dp"
+            android:layout_height="186dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:stateListAnimator="@null"
+            android:elevation="10dp"
+            android:translationZ="22dp"
+            android:background="@drawable/freezer"/>
+
+        <ImageView
+            android:layout_width="352dp"
+            android:layout_height="382dp"
+            android:layout_below="@id/iv_freezer"
+            android:elevation="10dp"
+            android:layout_marginStart="30dp"
+            android:translationZ="1dp"
+            android:background="@drawable/fridge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="11dp"
+            android:fontFamily="@font/basic_font"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="250dp"
+            android:text="냉동실"
+            android:textColor="@color/background"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:translationZ="100dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="11dp"
+            android:fontFamily="@font/basic_font"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="210dp"
+            android:layout_marginStart="250dp"
+            android:text="냉장실"
+            android:textColor="@color/background"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:translationZ="100dp" />
 
     </RelativeLayout>
-
-
 
 </LinearLayout>

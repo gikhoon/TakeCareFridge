@@ -18,9 +18,10 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
-            android:translationZ="10dp"
             android:elevation="10dp"
-            android:background="@drawable/backspace_right2"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"
+            android:background="@drawable/blue_icon_right"
             android:onClick="goBeforeActivity"/>
 
         <ImageView
@@ -37,20 +38,23 @@
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/blue_bar_right2"
+            android:background="@drawable/blue_bar_right"
             android:fontFamily="@font/basic_font"
             android:gravity="center"
             android:text="재료 설정"
             android:textColor="@color/white"
             android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="11"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:layout_weight="11">
 
         <RelativeLayout
             android:id="@+id/rl_1"
@@ -61,31 +65,33 @@
                 android:id="@+id/iv_settingIngredientImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@android:color/background_dark"/>
+                android:background="@drawable/background_bar" />
 
             <TextView
                 android:id="@+id/tv_settingIngredientLargeClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:textStyle="bold"
-                android:textSize="17sp"
+                android:layout_toRightOf="@+id/iv_settingIngredientImage"
+                android:fontFamily="@font/basic_font"
                 android:text="대분류"
-                android:layout_toRightOf="@+id/iv_settingIngredientImage"/>
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/et_settingIngredientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="20sp"
                 android:layout_below="@+id/tv_settingIngredientLargeClass"
-                android:layout_toRightOf="@+id/iv_settingIngredientImage"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:hint="이름을 입력해주세요"
+                android:layout_toRightOf="@+id/iv_settingIngredientImage"
                 android:enabled="false"
-                android:inputType="text"/>
+                android:fontFamily="@font/basic_font"
+                android:hint="이름을 입력해주세요"
+                android:inputType="text"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -93,24 +99,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_1"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="50dp">
+
             <TextView
                 android:id="@+id/tv_settingtv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:fontFamily="@font/basic_font"
+                android:text="보관 장소"
                 android:textSize="20sp"
-                android:text="보관 장소"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_settingIngredientPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/tv_settingtv1"
                 android:layout_marginStart="200dp"
-                android:textStyle="bold"
+                android:layout_toRightOf="@+id/tv_settingtv1"
+                android:fontFamily="@font/basic_font"
+                android:text="냉장고"
                 android:textSize="20sp"
-                android:text="냉장고"/>
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -118,25 +127,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_2"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="50dp">
+
             <TextView
                 android:id="@+id/tv_settingtv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:fontFamily="@font/basic_font"
+                android:text="유통 기한"
                 android:textSize="20sp"
-                android:text="유통 기한"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_settingDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="유통기한 날짜를 선택"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_toRightOf="@id/tv_settingtv2"
                 android:layout_marginStart="70dp"
-                android:onClick="goDatePicker"/>
+                android:layout_toRightOf="@id/tv_settingtv2"
+                android:fontFamily="@font/basic_font"
+                android:onClick="goDatePicker"
+                android:text="유통기한 날짜를 선택"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <Button
@@ -146,7 +158,15 @@
             android:layout_below="@+id/rl_3"
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
-            android:text="추가" />
+            android:layout_marginRight="10dp"
+            android:background="@color/background"
+            android:elevation="10dp"
+            android:fontFamily="@font/basic_font"
+            android:stateListAnimator="@null"
+            android:text="추가"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:translationZ="1dp" />
     </RelativeLayout>
 
 </LinearLayout>
