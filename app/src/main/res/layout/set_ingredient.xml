@@ -71,7 +71,7 @@
                 android:id="@+id/tv_settingIngredientLargeClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="25dp"
                 android:layout_toRightOf="@+id/iv_settingIngredientImage"
                 android:fontFamily="@font/basic_font"
                 android:text="대분류"
@@ -114,7 +114,7 @@
                 android:id="@+id/tv_settingIngredientPlace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="200dp"
+                android:layout_marginStart="150dp"
                 android:layout_toRightOf="@+id/tv_settingtv1"
                 android:fontFamily="@font/basic_font"
                 android:text="냉장고"
@@ -135,18 +135,22 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic_font"
                 android:text="유통 기한"
+                android:layout_marginTop="8dp"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_settingDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="70dp"
                 android:layout_toRightOf="@id/tv_settingtv2"
+                android:background="@drawable/background_bar"
                 android:fontFamily="@font/basic_font"
                 android:onClick="goDatePicker"
                 android:text="유통기한 날짜를 선택"
+                android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
+                android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>

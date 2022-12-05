@@ -29,6 +29,24 @@
             android:elevation="10dp"
             android:translationZ="1dp"
             android:stateListAnimator="@null"/>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="143dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bar_right"
+            android:fontFamily="@font/basic_font"
+            android:gravity="center"
+            android:text="냉동실"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:elevation="10dp"
+            android:translationZ="1dp"
+            android:stateListAnimator="@null"/>
+
         <Button
             android:layout_width="41dp"
             android:layout_height="41dp"
@@ -62,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/basic_font"
-            android:text="냉동실 신선도"
+            android:text="신선도"
             android:layout_centerHorizontal="true"/>
 
         <ProgressBar

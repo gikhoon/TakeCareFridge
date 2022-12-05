@@ -48,6 +48,7 @@
                 android:layout_below="@+id/iv_ingredientImage"
                 android:text="이름"
                 android:fontFamily="@font/basic_font"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="15sp"
                 android:singleLine="true"/>
@@ -58,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:fontFamily="@font/basic_font"
+                android:textStyle="bold"
                 android:textSize="15sp"
                 android:text="남은 유통기한"
                 android:gravity="center"/>
