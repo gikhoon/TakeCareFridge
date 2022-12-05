@@ -277,7 +277,7 @@ public class Signup extends AppCompatActivity {
                                             }
                                             else{
                                                 mSigEmail.setText(null);
-                                                Toast.makeText(Signup.this, "이미 존재하는 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(Signup.this, "사용이 불가능한 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
                                                 return;
                                             }
                                         }
