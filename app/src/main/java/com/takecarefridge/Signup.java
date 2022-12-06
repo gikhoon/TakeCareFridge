@@ -40,7 +40,7 @@ public class Signup extends AppCompatActivity {
     Button mregisterBtn;
 
     boolean mNickNameFlag;
-
+    boolean pwdLength;
 
     private FirebaseAuth firebaseAuth; //안드로이드와 파이어베이스 사이의 인증을 확인하기 위한 인스턴스 선언
 
@@ -59,7 +59,9 @@ public class Signup extends AppCompatActivity {
 
         //닉네임 중복 방지
         mNickNameFlag = false;
-                                                                      //파이어베이스 접근권한 갖기
+        //비밀번호 6자리
+        pwdLength = true;
+        //파이어베이스 접근권한 갖기
         mNicName = findViewById(R.id.user_NicName);
         mNicDupCheck = findViewById(R.id.NickName_check);
         mSigEmail = findViewById(R.id.user_id);
@@ -119,14 +121,17 @@ public class Signup extends AppCompatActivity {
         mregisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               final String email = mSigEmail.getText().toString().trim();
-               String pwd = mSigpassword.getText().toString().trim();
-               String pwdcheck = mSigpasswordCheck.getText().toString().trim();
-               String name =mNicName.getText().toString().trim();
+                final String email = mSigEmail.getText().toString().trim();
+                String pwd = mSigpassword.getText().toString().trim();
+                String pwdcheck = mSigpasswordCheck.getText().toString().trim();
+                String name =mNicName.getText().toString().trim();
 
                 if( email.length() == 0 | pwd.length() == 0 | pwdcheck.length() == 0 | name.length() == 0){
                     Toast.makeText(Signup.this, "모든 정보를 입력하였는지 확인해주세요.", Toast.LENGTH_SHORT).show();
                     return;
+                }
+                if(pwd.length()<6){
+                    pwdLength = false;
                 }
 
                 if (!mNickNameFlag) {
@@ -134,15 +139,15 @@ public class Signup extends AppCompatActivity {
                     return;
                 }
 
-               if(pwd.equals(pwdcheck)){
-                   Log.d(TAG, "등록 버튼 " + email + " , " + pwd);
-                   final ProgressDialog mDialog = new ProgressDialog(Signup.this);
-                   mDialog.setMessage("가입중입니다...");
-                   mDialog.show();
+                if(pwd.equals(pwdcheck)){
+                    Log.d(TAG, "등록 버튼 " + email + " , " + pwd);
+                    final ProgressDialog mDialog = new ProgressDialog(Signup.this);
+                    mDialog.setMessage("가입중입니다...");
+                    mDialog.show();
 
-                   firebaseAuth.createUserWithEmailAndPassword(email,pwd)
+                    firebaseAuth.createUserWithEmailAndPassword(email,pwd)
                             .addOnCompleteListener(Signup.this,
-                                   new OnCompleteListener<AuthResult>(){
+                                    new OnCompleteListener<AuthResult>(){
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task){
                                             if(task.isSuccessful()) {
@@ -315,21 +320,29 @@ public class Signup extends AppCompatActivity {
                                                 Toast.makeText(Signup.this, "회원가입에 성공하셨습니다.", Toast.LENGTH_SHORT).show();
                                             }
                                             else{
-                                                mSigEmail.setText(null);
-                                                Toast.makeText(Signup.this, "사용이 불가능한 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();                                       
+
+                                                if(pwdLength){
+                                                    Toast.makeText(Signup.this, "이미 존재하는 이메일 아이디 입니다.\n다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                                                    mSigEmail.setText(null);
+                                                }
+                                                else{
+                                                    Toast.makeText(Signup.this, "비밀번호를 6자리 이상 입력해주세요 ", Toast.LENGTH_SHORT).show();
+                                                    mSigpassword.setText(null);
+                                                    mSigpasswordCheck.setText(null);
+                                                }
                                                 mDialog.cancel();
                                                 return;
                                             }
                                         }
-                                   });
+                                    });
 
-               }
-               else{ //비밀번호가 일치하지 않을 때
-                   mSigpassword.setText(null);
-                   mSigpasswordCheck.setText(null);
-                   Toast.makeText(Signup.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                   return;
-               }
+                }
+                else{ //비밀번호가 일치하지 않을 때
+                    mSigpassword.setText(null);
+                    mSigpasswordCheck.setText(null);
+                    Toast.makeText(Signup.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
             }
         });

@@ -79,7 +79,7 @@
             android:textStyle="bold"
             android:fontFamily="@font/basic_font"
             android:textSize="15dp"
-            android:hint="비밀번호 입력"/>
+            android:hint="비밀번호 입력(6자리 이상)"/>
 
         <EditText
             android:id="@+id/user_password_check"
