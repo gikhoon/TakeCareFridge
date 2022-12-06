@@ -80,7 +80,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     //클릭
     public interface OnItemClickListener {
-        void onItemClick(int pos);
+        void onItemClick(RecipeData r);
     }
 
     private static OnItemClickListener onItemClickListener = null;
@@ -91,7 +91,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
 
     public interface OnLongItemClickListener {
-        void onLongItemClick(int pos);
+        void onLongItemClick(RecipeData r);
     }
 
     private static OnLongItemClickListener onLongItemClickListener = null;
@@ -117,7 +117,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(position);
+                            onItemClickListener.onItemClick(RecipeDataList.get(position));
                         }
                     }
                 }
@@ -129,7 +129,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         if (onLongItemClickListener != null) {
-                            onLongItemClickListener.onLongItemClick(position);
+                            onLongItemClickListener.onLongItemClick(RecipeDataList.get(position));
                             return true;
                         }
                     }
