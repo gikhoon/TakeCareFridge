@@ -116,8 +116,8 @@ public class RecipeMain extends AppCompatActivity {
                                                         setAdapter();
                                                         mRecipeListAdapter.setOnItemClickListener(new RecipeListAdapter.OnItemClickListener() {
                                                             @Override
-                                                            public void onItemClick(int pos) {
-                                                                String link = recipeDataList.get(pos).getLink();
+                                                            public void onItemClick(RecipeData v) {
+                                                                String link = v.getLink();
                                                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                                                                 startActivity(intent);
                                                             }
@@ -125,8 +125,8 @@ public class RecipeMain extends AppCompatActivity {
 
                                                         mRecipeListAdapter.setOnLongItemClickListener(new RecipeListAdapter.OnLongItemClickListener() {
                                                             @Override
-                                                            public void onLongItemClick(int pos) {
-                                                                String link = recipeDataList.get(pos).getLink();
+                                                            public void onLongItemClick(RecipeData v) {
+                                                                String link = v.getLink();
                                                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
                                                                 startActivity(intent);
                                                             }
